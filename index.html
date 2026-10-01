@@ -212,6 +212,21 @@
             border-radius: 2rem;
         }
         .icon-btn.whatsapp { background: #25D366; color: white; }
+        /* ---- Dashboard ---- */
+        .dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-bottom: 1.5rem; }
+        .dash-card { border: 2px solid transparent; border-radius: 1.4rem; padding: 14px 16px; cursor: pointer; color: #fff; box-shadow: 0 8px 18px -8px rgba(0,0,0,.35); transition: transform .15s, box-shadow .15s, border-color .15s; user-select: none; }
+        .dash-card:hover { transform: translateY(-3px); }
+        .dash-card.active { border-color: #1e1b4b; box-shadow: 0 0 0 4px rgba(255,255,255,.9), 0 10px 22px -6px rgba(0,0,0,.45); transform: translateY(-3px); }
+        .dash-card .d-title { font-size: .9rem; opacity: .95; }
+        .dash-card .d-value { font-size: 1.9rem; font-weight: 800; margin: 4px 0 2px; }
+        .dash-card .d-sub { font-size: .78rem; opacity: .9; }
+        .dash-all { background: linear-gradient(135deg,#6366f1,#4338ca); }
+        .dash-bal { background: linear-gradient(135deg,#ef4444,#b91c1c); }
+        .dash-due { background: linear-gradient(135deg,#f97316,#c2410c); }
+        .dash-paid { background: linear-gradient(135deg,#22c55e,#15803d); }
+        .dash-remind { background: linear-gradient(135deg,#f59e0b,#b45309); }
+        .filter-chip { display:inline-block; font-size:.85rem; background:#ede9fe; color:#4c1d95; padding:4px 12px; border-radius:20px; margin-left:8px; }
+        @media print { .dash-grid, .filter-chip { display: none !important; } }
         .icon-btn.remind { background: #f59e0b; color: white; }
         .icon-btn.print { background: #334155; color: white; }
         .icon-btn.edit { background: #3b82f6; color: white; }
@@ -275,6 +290,13 @@
         <button class="sync-btn" onclick="manualSync()" title="இப்போதே சின்க் செய்">🔄 இப்போதே சின்க்</button>
         <button class="sync-btn" onclick="promptGasUrl()" title="Sync URL அமை">⚙️ Sync அமை</button>
     </div>
+    <div class="dash-grid no-print" id="dashboard">
+        <div class="dash-card dash-all" data-filter="all"><div class="d-title">📋 அனைத்தும்</div><div class="d-value" id="dAll">0</div><div class="d-sub">மொத்த பதிவுகள்</div></div>
+        <div class="dash-card dash-bal" data-filter="due"><div class="d-title">💰 மொத்த பாக்கி தொகை</div><div class="d-value" id="dBal">₹0</div><div class="d-sub" id="dBalSub">—</div></div>
+        <div class="dash-card dash-due" data-filter="due"><div class="d-title">⏳ செலுத்த வேண்டியவர்கள்</div><div class="d-value" id="dDue">0</div><div class="d-sub">பாக்கி உள்ளவர்கள்</div></div>
+        <div class="dash-card dash-paid" data-filter="paid"><div class="d-title">✅ செலுத்தியவர்கள்</div><div class="d-value" id="dPaid">0</div><div class="d-sub" id="dPaidSub">—</div></div>
+        <div class="dash-card dash-remind" data-filter="remind"><div class="d-title">🔔 நினைவூட்ட வேண்டியது</div><div class="d-value" id="dRemind">0</div><div class="d-sub" id="dRemindSub">—</div></div>
+    </div>
     <div class="card">
         <h1>
             🧾 தாஸ் பொது சேவை மையம் - வாடிக்கையாளர் & பாக்கி
@@ -330,7 +352,7 @@
     </div>
 
     <div class="card">
-        <h2 style="font-size:1.5rem; margin-bottom: 1rem;">📌 வேலை & வாடிக்கையாளர் பட்டியல்</h2>
+        <h2 style="font-size:1.5rem; margin-bottom: 1rem;">📌 வேலை & வாடிக்கையாளர் பட்டியல் <span class="filter-chip" id="filterChip" style="display:none;"></span></h2>
         <div class="table-wrapper">
             <table id="customerTable">
                 <thead>
@@ -922,17 +944,63 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
     }
 
     // ----- Rendering & Filter -----
-    function renderFiltered() {
-        let term = currentSearchTerm.toLowerCase();
-        let filtered = customers.filter(c => 
-            c.name.toLowerCase().includes(term) || 
-            (c.jobName && c.jobName.toLowerCase().includes(term)) ||
-            (c.whatsapp && c.whatsapp.includes(term))
-        );
-        renderTableWithData(filtered);
-        updateFooter(filtered);
+    let currentFilter = "all";           // all | due | paid | remind
+    const REMIND_AFTER_DAYS = 3;         // கடைசியாக அனுப்பி இத்தனை நாள் ஆனால் நினைவூட்ட வேண்டும்
+    const FILTER_LABELS = { due: "⏳ செலுத்த வேண்டியவர்கள்", paid: "✅ செலுத்தியவர்கள்", remind: "🔔 நினைவூட்ட வேண்டியவர்கள்" };
+
+    function needsReminder(c) {
+        return c.balance > 0 && (!c.lastSentAt || daysSince(c.lastSentAt) >= REMIND_AFTER_DAYS);
+    }
+    function matchesFilter(c) {
+        if (currentFilter === "due") return c.balance > 0;
+        if (currentFilter === "paid") return c.balance <= 0;
+        if (currentFilter === "remind") return needsReminder(c);
+        return true;
     }
 
+    function updateDashboard() {
+        const due = customers.filter(c => c.balance > 0);
+        const paid = customers.filter(c => c.balance <= 0);
+        const remind = customers.filter(needsReminder);
+        const totalBal = due.reduce((t, c) => t + c.balance, 0);
+        const collected = customers.reduce((t, c) => t + (c.paid || 0), 0);
+        const neverSent = remind.filter(c => !c.lastSentAt).length;
+        document.getElementById("dAll").innerText = customers.length;
+        document.getElementById("dBal").innerText = "₹" + totalBal.toLocaleString("en-IN", { maximumFractionDigits: 2 });
+        document.getElementById("dBalSub").innerText = due.length + " பேரிடம் வசூலிக்க";
+        document.getElementById("dDue").innerText = due.length;
+        document.getElementById("dPaid").innerText = paid.length;
+        document.getElementById("dPaidSub").innerText = "வசூலானது ₹" + collected.toLocaleString("en-IN", { maximumFractionDigits: 2 });
+        document.getElementById("dRemind").innerText = remind.length;
+        document.getElementById("dRemindSub").innerText = remind.length ? (neverSent ? neverSent + " பேருக்கு இன்னும் பில் அனுப்பவில்லை" : REMIND_AFTER_DAYS + "+ நாள் ஆனவர்கள்") : "யாரும் இல்லை 👍";
+        document.querySelectorAll("#dashboard .dash-card").forEach(el => {
+            const f = el.dataset.filter;
+            el.classList.toggle("active", f === currentFilter && !(f === "all" && currentFilter === "all"));
+        });
+        const chip = document.getElementById("filterChip");
+        if (currentFilter === "all") chip.style.display = "none";
+        else { chip.style.display = "inline-block"; chip.innerText = FILTER_LABELS[currentFilter] + " மட்டும் • மீண்டும் கிளிக் செய்தால் அனைத்தும்"; }
+    }
+
+    function setFilter(f) {
+        currentFilter = (f === currentFilter) ? "all" : f;
+        renderFiltered();
+    }
+
+    function renderFiltered() {
+        let term = currentSearchTerm.toLowerCase();
+        let filtered = customers.filter(c =>
+            matchesFilter(c) && (
+            c.name.toLowerCase().includes(term) ||
+            (c.jobName && c.jobName.toLowerCase().includes(term)) ||
+            (c.whatsapp && c.whatsapp.includes(term)))
+        );
+        // புதிய பதிவுகள் மேலே (id = உருவாக்கிய நேரம்)
+        filtered.sort((x, y) => (Number(y.id) || 0) - (Number(x.id) || 0));
+        renderTableWithData(filtered);
+        updateFooter(filtered);
+        updateDashboard();
+    }
     function updateFooter(data) {
         const totalJobs = data.length;
         const totalBalance = data.reduce((sum, c) => sum + (c.balance > 0 ? c.balance : 0), 0);
@@ -1000,6 +1068,11 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
     document.getElementById("searchInput").addEventListener("input", (e) => { currentSearchTerm = e.target.value; renderFiltered(); });
     document.getElementById("clearSearchBtn").addEventListener("click", () => { document.getElementById("searchInput").value = ""; currentSearchTerm = ""; renderFiltered(); });
     document.getElementById("globalPrintBtn").addEventListener("click", printFullList);
+    document.querySelectorAll("#dashboard .dash-card").forEach(el => el.addEventListener("click", () => {
+        setFilter(el.dataset.filter);
+        const t = document.getElementById("customerTable");
+        if (t) t.scrollIntoView({ behavior: "smooth", block: "start" });
+    }));
     document.getElementById("exportDataBtn").addEventListener("click", exportJSON);
     document.getElementById("exportCSVBtn").addEventListener("click", exportCSV);
     document.getElementById("sampleDataBtn").addEventListener("click", loadSampleData);
