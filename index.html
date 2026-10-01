@@ -289,6 +289,9 @@
         <span id="syncStatus">☁️ Sync அமைக்கப்படவில்லை</span>
         <button class="sync-btn" onclick="manualSync()" title="இப்போதே சின்க் செய்">🔄 இப்போதே சின்க்</button>
         <button class="sync-btn" onclick="promptGasUrl()" title="Sync URL அமை">⚙️ Sync அமை</button>
+        <label class="sync-btn" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;" title="ON: வாடிக்கையாளர் சாட் நேரடியாகத் திறக்கும். OFF: படத்துடன் பகிர்வு திரை (மொபைல்)">
+            <input type="checkbox" id="waDirectToggle" checked> 📲 நேரடி WhatsApp
+        </label>
     </div>
     <div class="dash-grid no-print" id="dashboard">
         <div class="dash-card dash-all" data-filter="all"><div class="d-title">📋 அனைத்தும்</div><div class="d-value" id="dAll">0</div><div class="d-sub">மொத்த பதிவுகள்</div></div>
@@ -735,7 +738,10 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
 
         if (blob) {
             const file = new File([blob], fileName, { type: "image/png" });
-            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            const direct = localStorage.getItem("wa_direct") !== "0";
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+            // நேரடி முறை OFF: படத்துடன் பகிர்வு திரை (WhatsApp-இல் நபரைத் தேர்ந்தெடுக்க வேண்டும்)
+            if (!direct && navigator.canShare && navigator.canShare({ files: [file] })) {
                 try {
                     await navigator.share({ files: [file], text: message });
                     return true;
@@ -743,16 +749,21 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
                     if (e && e.name === "AbortError") return false;
                 }
             }
+            // நேரடி முறை: படத்தை தயார் செய்து விட்டு, அந்த எண்ணின் சாட்டை நேரடியாகத் திறக்கும்
             let copied = false;
-            try {
-                await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
-                copied = true;
-            } catch (e) {}
-            const a = document.createElement("a");
-            a.href = URL.createObjectURL(blob); a.download = fileName;
-            document.body.appendChild(a); a.click(); a.remove();
-            setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-            showToast(copied ? "🧾 பில் படம் காபி ஆனது — WhatsApp-இல் Ctrl+V செய்யவும்" : "🧾 பில் படம் பதிவிறக்கம் ஆனது — WhatsApp-இல் இணைக்கவும்");
+            if (!isMobile) {
+                try {
+                    await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
+                    copied = true;
+                } catch (e) {}
+            }
+            if (!copied) {
+                const a = document.createElement("a");
+                a.href = URL.createObjectURL(blob); a.download = fileName;
+                document.body.appendChild(a); a.click(); a.remove();
+                setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+            }
+            showToast(copied ? "🧾 பில் படம் காபி ஆனது — சாட்டில் Ctrl+V செய்து அனுப்பவும்" : "🧾 பில் படம் சேமிக்கப்பட்டது — WhatsApp-இல் 📎 மூலம் இணைக்கவும்");
         }
         window.open(`https://wa.me/91${rawPhone}?text=${encodeURIComponent(message)}`, '_blank');
         return true;
@@ -1068,6 +1079,11 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
     document.getElementById("searchInput").addEventListener("input", (e) => { currentSearchTerm = e.target.value; renderFiltered(); });
     document.getElementById("clearSearchBtn").addEventListener("click", () => { document.getElementById("searchInput").value = ""; currentSearchTerm = ""; renderFiltered(); });
     document.getElementById("globalPrintBtn").addEventListener("click", printFullList);
+    (function () {
+        const t = document.getElementById("waDirectToggle");
+        t.checked = localStorage.getItem("wa_direct") !== "0";
+        t.addEventListener("change", () => { localStorage.setItem("wa_direct", t.checked ? "1" : "0"); showToast(t.checked ? "📲 நேரடி WhatsApp: ON" : "📤 படத்துடன் பகிர்வு முறை: ON"); });
+    })();
     document.querySelectorAll("#dashboard .dash-card").forEach(el => el.addEventListener("click", () => {
         setFilter(el.dataset.filter);
         const t = document.getElementById("customerTable");
