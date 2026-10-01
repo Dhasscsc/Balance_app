@@ -296,6 +296,10 @@
         <label class="sync-btn" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;" title="ON: QR-இல் பாக்கித் தொகை தானாக வரும். OFF: தொகை இல்லாத QR (வாடிக்கையாளர் தானே தொகை உள்ளிடுவார்)">
             <input type="checkbox" id="qrAmountToggle" checked> 💰 QR-இல் தொகை
         </label>
+        <label class="sync-btn" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;" title="உங்கள் PhonePe/வங்கி ஆப்பில் உள்ள அதிகாரப்பூர்வ QR படத்தை பதிவேற்றவும் (screenshot)">
+            🖼️ சொந்த QR <input type="file" id="customQrInput" accept="image/*" style="display:none;">
+        </label>
+        <button class="sync-btn" id="customQrRemove" onclick="removeCustomQr()" style="display:none;" title="சொந்த QR நீக்கு">✖ QR நீக்கு</button>
     </div>
     <div class="dash-grid no-print" id="dashboard">
         <div class="dash-card dash-all" data-filter="all"><div class="d-title">📋 அனைத்தும்</div><div class="d-value" id="dAll">0</div><div class="d-sub">மொத்த பதிவுகள்</div></div>
@@ -317,7 +321,7 @@
             <label for="importFileInput" class="btn-secondary" style="cursor:pointer; display:inline-flex; align-items:center; gap:6px;">📂 இறக்குமதி செய் (JSON)</label>
             <input type="file" id="importFileInput" accept=".json" style="display:none;">
             <button id="sampleDataBtn" class="btn-warning">✨ மாதிரி தரவு சேர்</button>
-            <span class="upi-badge">🏦 UPI: 9843232324@ypl</span>
+            <span class="upi-badge">🏦 UPI: 9843232324@ybl</span>
         </div>
 
         <div class="form-grid">
@@ -620,8 +624,35 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
     }
 
     // ================= பில் படம் (QR உடன்) + WhatsApp =================
-    const UPI_ID = "9843232324@ypl";
+    const UPI_ID = "9843232324@ybl";
     const SHOP_NAME = "தாஸ் பொது சேவை மையம்";
+
+    // கடையின் சொந்த (அதிகாரப்பூர்வ) QR படம் — அமைத்தால் அதுவே பில்லில் வரும்
+    let customQrImg = null;
+    function loadCustomQr() {
+        const d = localStorage.getItem("custom_qr");
+        if (d) { customQrImg = new Image(); customQrImg.src = d; } else customQrImg = null;
+        const rm = document.getElementById("customQrRemove");
+        if (rm) rm.style.display = d ? "inline-block" : "none";
+    }
+    function setCustomQr(file) {
+        if (!file) return;
+        const fr = new FileReader();
+        fr.onload = () => {
+            const im = new Image();
+            im.onload = () => {
+                const k = Math.min(1, 700 / Math.max(im.naturalWidth, im.naturalHeight));
+                const c = document.createElement("canvas");
+                c.width = Math.round(im.naturalWidth * k); c.height = Math.round(im.naturalHeight * k);
+                c.getContext("2d").drawImage(im, 0, 0, c.width, c.height);
+                try { localStorage.setItem("custom_qr", c.toDataURL("image/png")); } catch (e) { showToast("❌ படம் மிகப் பெரியது", true); return; }
+                loadCustomQr(); showToast("✅ சொந்த QR அமைக்கப்பட்டது — இனி பில்லில் இதுவே வரும");
+            };
+            im.src = fr.result;
+        };
+        fr.readAsDataURL(file);
+    }
+    function removeCustomQr() { localStorage.removeItem("custom_qr"); loadCustomQr(); showToast("🗑️ சொந்த QR நீக்கப்பட்டது — தானியங்கி QR பயன்படும்"); }
 
     function makeUpiQrModules(cust) {
         // எளிய, நிலையான UPI லிங்க் (தமிழ் குறிப்பு/tn இல்லை — சில UPI ஆப்கள் அதை ஏற்பதில்லை)
@@ -646,7 +677,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
             ["பேலன்ஸ்", "₹" + cust.balance.toFixed(2)]
         ];
         const lineH = 46, qrSize = 300;
-        const H = 210 + rows1.length * lineH + 40 + rows2.length * lineH + 70 + 50 + qrSize + 120;
+        const H = 210 + rows1.length * lineH + 40 + rows2.length * lineH + 70 + 50 + qrSize + 260;
         const c = document.createElement("canvas");
         c.width = W; c.height = H;
         const g = c.getContext("2d");
@@ -692,13 +723,30 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
         g.textAlign = "center"; g.fillStyle = "#334155"; g.font = "22px " + font;
         g.fillText(cust.balance > 0 ? "UPI மூலம் செலுத்த ஸ்கேன் செய்யவும்" : "UPI QR", W / 2, y);
         y += 15;
-        const q = makeUpiQrModules(cust);
-        const n = q.getModuleCount(), cell = Math.floor(qrSize / n), size = cell * n;
-        const qx = Math.floor((W - size) / 2);
-        g.fillStyle = "#fff"; g.fillRect(qx - 12, y - 6, size + 24, size + 24);
-        g.fillStyle = "#000";
-        for (let r = 0; r < n; r++) for (let col = 0; col < n; col++) {
-            if (q.isDark(r, col)) g.fillRect(qx + col * cell, y + 6 + r * cell, cell, cell);
+        let size;
+        if (customQrImg && customQrImg.complete && customQrImg.naturalWidth) {
+            // கடையின் அதிகாரப்பூர்வ QR படம்
+            const maxW = 340, maxH = 400;
+            const k = Math.min(maxW / customQrImg.naturalWidth, maxH / customQrImg.naturalHeight);
+            const w = Math.round(customQrImg.naturalWidth * k), h = Math.round(customQrImg.naturalHeight * k);
+            g.fillStyle = "#fff"; g.fillRect(Math.floor((W - w) / 2) - 8, y - 6, w + 16, h + 16);
+            g.drawImage(customQrImg, Math.floor((W - w) / 2), y, w, h);
+            size = h;
+            if (cust.balance > 0) {
+                y += size + 38; g.fillStyle = "#b91c1c"; g.font = "bold 24px " + font;
+                g.fillText("செலுத்த வேண்டிய தொகை: ₹" + cust.balance.toFixed(2), W / 2, y);
+                size = 0; y -= 10;
+            }
+        } else {
+            const q = makeUpiQrModules(cust);
+            const n = q.getModuleCount(), cell = Math.floor(qrSize / n);
+            size = cell * n;
+            const qx = Math.floor((W - size) / 2);
+            g.fillStyle = "#fff"; g.fillRect(qx - 12, y - 6, size + 24, size + 24);
+            g.fillStyle = "#000";
+            for (let r = 0; r < n; r++) for (let col = 0; col < n; col++) {
+                if (q.isDark(r, col)) g.fillRect(qx + col * cell, y + 6 + r * cell, cell, cell);
+            }
         }
         y += size + 50;
         g.fillStyle = "#334155"; g.font = "22px " + font;
@@ -841,6 +889,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
     }
 
     function printQrSvg(cust) {
+        if (customQrImg && customQrImg.src) return `<img src="${customQrImg.src}" style="width:180px;height:auto;">`;
         const q = makeUpiQrModules(cust), n = q.getModuleCount();
         let p = "";
         for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (q.isDark(r, c)) p += `M${c},${r}h1v1h-1z`;
@@ -872,7 +921,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
                 <div class="row"><div class="label">செலுத்தியது:</div><div>₹${cust.paid.toFixed(2)}</div></div>
                 <div class="row"><div class="label">மீதி பாக்கி:</div><div class="due">₹${cust.balance.toFixed(2)}</div></div>
                 <hr />
-                <div style="text-align:center;margin:10px 0;">${printQrSvg(cust)}<div>UPI: 9843232324@ypl</div></div>
+                <div style="text-align:center;margin:10px 0;">${printQrSvg(cust)}<div>UPI: 9843232324@ybl</div></div>
                 <p>தாஸ் பொது சேவை மையம்</p>
                 <p><small>அச்சிட்ட தேதி: ${new Date().toLocaleString()}</small></p>
             </div>
@@ -898,7 +947,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
             <h2>📋 தாஸ் பொது சேவை மையம் - முழு வேலை & பாக்கி அறிக்கை</h2>
             <table><thead><tr><th>#</th><th>வாடிக்கையாளர்</th><th>வேலை பெயர்</th><th>வாட்ஸ்அப்</th><th>மொத்தம்</th><th>செலுத்தியது</th><th>பாக்கி</th></tr></thead><tbody>${tbodyRows}</tbody></table>
             <div style="margin-top:16px;">${stats}</div>
-            <p>UPI: 9843232324@ypl | நன்றி - தாஸ் மேலாண்மை</p>
+            <p>UPI: 9843232324@ybl | நன்றி - தாஸ் மேலாண்மை</p>
             <script>window.onload=()=>window.print()<\/script>
             </body></html>
         `;
@@ -1043,7 +1092,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
     function updateFooter(data) {
         const totalJobs = data.length;
         const totalBalance = data.reduce((sum, c) => sum + (c.balance > 0 ? c.balance : 0), 0);
-        document.getElementById("statsFooter").innerHTML = `📋 மொத்த வேலைகள்: ${totalJobs} | 💰 மொத்த பாக்கி: ₹${totalBalance.toFixed(2)} | 🧾 UPI: 9843232324@ypl`;
+        document.getElementById("statsFooter").innerHTML = `📋 மொத்த வேலைகள்: ${totalJobs} | 💰 மொத்த பாக்கி: ₹${totalBalance.toFixed(2)} | 🧾 UPI: 9843232324@ybl`;
     }
 
     function escapeHtml(str) { if(!str) return ""; return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
@@ -1108,6 +1157,8 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
     document.getElementById("searchInput").addEventListener("input", (e) => { currentSearchTerm = e.target.value; renderFiltered(); });
     document.getElementById("clearSearchBtn").addEventListener("click", () => { document.getElementById("searchInput").value = ""; currentSearchTerm = ""; renderFiltered(); });
     document.getElementById("globalPrintBtn").addEventListener("click", printFullList);
+    document.getElementById("customQrInput").addEventListener("change", (e) => { setCustomQr(e.target.files[0]); e.target.value = ""; });
+    loadCustomQr();
     (function () {
         const q = document.getElementById("qrAmountToggle");
         q.checked = localStorage.getItem("qr_amount") !== "0";
