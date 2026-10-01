@@ -227,6 +227,7 @@
         .dash-remind { background: linear-gradient(135deg,#f59e0b,#b45309); }
         .filter-chip { display:inline-block; font-size:.85rem; background:#ede9fe; color:#4c1d95; padding:4px 12px; border-radius:20px; margin-left:8px; }
         @media print { .dash-grid, .filter-chip { display: none !important; } }
+        .icon-btn.img { background: #0ea5e9; color: white; }
         .icon-btn.remind { background: #f59e0b; color: white; }
         .icon-btn.print { background: #334155; color: white; }
         .icon-btn.edit { background: #3b82f6; color: white; }
@@ -769,6 +770,29 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
         return true;
     }
 
+    // 🖼️ பில் படத்தை மட்டும் காபி செய் (கணினி) / சேமி (மொபைல்)
+    async function copyBillImage(id) {
+        const cust = customers.find(c => c.id === id);
+        if(!cust) return;
+        let blob = null;
+        try { blob = await canvasToBlob(buildBillCanvas(cust, 0)); } catch (e) { console.error(e); }
+        if (!blob) { showToast("❌ படம் உருவாக்க முடியவில்லை", true); return; }
+        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        if (!isMobile) {
+            try {
+                await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
+                showToast("🖼️ பில் படம் காபி ஆனது — WhatsApp-இல் Ctrl+V செய்யவும்");
+                return;
+            } catch (e) {}
+        }
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "Bill-" + (cust.name || "customer").replace(/[^\w\u0B80-\u0BFF]+/g, "_") + ".png";
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+        showToast(isMobile ? "🖼️ பில் படம் சேமிக்கப்பட்டது" : "🖼️ காபி முடியவில்லை — படம் பதிவிறக்கம் ஆனது");
+    }
+
     function checkPhone(cust) {
         if(!cust.whatsapp) { alert(`வாட்ஸ்அப் எண் இல்லை. முதலில் எண்ணைத் திருத்தவும்.`); return false; }
         if(cust.whatsapp.replace(/\D/g, '').length !== 10) { alert("10 இலக்க எண் தேவை"); return false; }
@@ -1055,6 +1079,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
             const ed = mkBtn("✏️ Edit", "edit", () => editCustomer(cust.id));
             const del = mkBtn("🗑️ Delete", "delete", () => deleteCustomer(cust.id));
             action.append(wa);
+            action.append(mkBtn("🖼️ படம்", "img", () => copyBillImage(cust.id)));
             if (cust.balance > 0) {
                 const rm = mkBtn(`🔔 நினைவூட்டு (${cust.remindCount || 0})`, "remind", () => sendReminder(cust.id));
                 action.append(rm);
