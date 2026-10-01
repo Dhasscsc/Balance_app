@@ -293,6 +293,9 @@
         <label class="sync-btn" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;" title="ON: வாடிக்கையாளர் சாட் நேரடியாகத் திறக்கும். OFF: படத்துடன் பகிர்வு திரை (மொபைல்)">
             <input type="checkbox" id="waDirectToggle" checked> 📲 நேரடி WhatsApp
         </label>
+        <label class="sync-btn" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;" title="ON: QR-இல் பாக்கித் தொகை தானாக வரும். OFF: தொகை இல்லாத QR (வாடிக்கையாளர் தானே தொகை உள்ளிடுவார்)">
+            <input type="checkbox" id="qrAmountToggle" checked> 💰 QR-இல் தொகை
+        </label>
     </div>
     <div class="dash-grid no-print" id="dashboard">
         <div class="dash-card dash-all" data-filter="all"><div class="d-title">📋 அனைத்தும்</div><div class="d-value" id="dAll">0</div><div class="d-sub">மொத்த பதிவுகள்</div></div>
@@ -621,8 +624,9 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
     const SHOP_NAME = "தாஸ் பொது சேவை மையம்";
 
     function makeUpiQrModules(cust) {
+        // எளிய, நிலையான UPI லிங்க் (தமிழ் குறிப்பு/tn இல்லை — சில UPI ஆப்கள் அதை ஏற்பதில்லை)
         let url = "upi://pay?pa=" + UPI_ID + "&pn=" + encodeURIComponent("Dhass CSC") + "&cu=INR";
-        if (cust.balance > 0) url += "&am=" + cust.balance.toFixed(2) + "&tn=" + encodeURIComponent("Balance - " + (cust.name || ""));
+        if (cust.balance > 0 && localStorage.getItem("qr_amount") !== "0") url += "&am=" + String(Math.round(cust.balance * 100) / 100);
         const q = qrcode(0, 'M');
         q.addData(url);
         q.make();
@@ -1104,6 +1108,11 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
     document.getElementById("searchInput").addEventListener("input", (e) => { currentSearchTerm = e.target.value; renderFiltered(); });
     document.getElementById("clearSearchBtn").addEventListener("click", () => { document.getElementById("searchInput").value = ""; currentSearchTerm = ""; renderFiltered(); });
     document.getElementById("globalPrintBtn").addEventListener("click", printFullList);
+    (function () {
+        const q = document.getElementById("qrAmountToggle");
+        q.checked = localStorage.getItem("qr_amount") !== "0";
+        q.addEventListener("change", () => { localStorage.setItem("qr_amount", q.checked ? "1" : "0"); showToast(q.checked ? "💰 QR-இல் தொகை: ON" : "💰 QR-இல் தொகை: OFF (தொகை இல்லாத QR)"); });
+    })();
     (function () {
         const t = document.getElementById("waDirectToggle");
         t.checked = localStorage.getItem("wa_direct") !== "0";
