@@ -282,7 +282,62 @@
         }
         .sync-btn:hover { background: #dbe4ff; }
         @media print { .sync-bar { display: none !important; } }
-    </style>
+    #tab-ledger 600;700&display=swap');
+*{box-sizing:border-box}
+#tab-ledger .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+#tab-ledger .lcard{background:#fff;border-radius:8px;padding:10px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.1);border-top:4px solid #94a3b8;cursor:pointer}
+#tab-ledger .lcard b{display:block;font-size:24px}
+#tab-ledger .lcard span{font-size:13px}
+#tab-ledger .c-bal{border-top-color:#dc2626}
+#tab-ledger .c-bal b{color:#b91c1c}
+#tab-ledger .c-due{border-top-color:#2563eb}
+#tab-ledger .c-due b{color:#1d4ed8}
+#tab-ledger .c-rem{border-top-color:#f59e0b}
+#tab-ledger .c-rem b{color:#b45309}
+#tab-ledger .c-tod{border-top-color:#16a34a}
+#tab-ledger .c-tod b{color:#15803d}
+#tab-ledger .forms{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+#tab-ledger .box{background:#fff;border-radius:8px;padding:14px;box-shadow:0 2px 6px rgba(0,0,0,.1)}
+#tab-ledger .box h2{margin:0 0 10px;font-size:17px;color:#1e3a8a;border-bottom:1px solid #e2e8f0;padding-bottom:6px}
+#tab-ledger label{display:block;font-size:13px;font-weight:600;margin:6px 0 3px}
+#tab-ledger input,#tab-ledger select{width:100%;padding:9px;border:1px solid #cbd5e1;border-radius:4px;font-family:inherit;font-size:14px;min-width:0}
+#tab-ledger .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#tab-ledger .item{display:grid;grid-template-columns:1fr 110px 36px;gap:6px;margin-bottom:6px}
+#tab-ledger .x{background:#fee2e2;color:#b91c1c;border:1px solid #fecaca;border-radius:4px;cursor:pointer;font-weight:bold}
+#tab-ledger button{font-family:inherit;cursor:pointer}
+#tab-ledger .btn{width:100%;margin-top:10px;padding:11px;border:0;border-radius:5px;color:#fff;font-size:15px;font-weight:700}
+#tab-ledger .b-add{background:#0f766e}
+#tab-ledger .b-pay{background:#16a34a}
+#tab-ledger .btn-s{background:#e0e7ff;color:#3730a3;border:1px solid #c7d2fe;border-radius:4px;padding:6px 12px;font-size:13px;font-weight:700}
+#tab-ledger .bal-note{margin-top:6px;font-weight:700;color:#b91c1c}
+#tab-ledger .tools{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px}
+#tab-ledger .tools input{flex:1;min-width:180px}
+#tab-ledger .tools select{width:auto}
+#tab-ledger .tw{overflow-x:auto}
+#tab-ledger table{width:100%;border-collapse:collapse;background:#fff;font-size:14px}
+#tab-ledger th,#tab-ledger td{border:1px solid #e2e8f0;padding:8px;text-align:left;vertical-align:top}
+#tab-ledger th{background:#1e3a8a;color:#fff;white-space:nowrap}
+#tab-ledger .tb{border:0;border-radius:4px;padding:5px 8px;font-size:12px;font-weight:700;color:#fff;margin:1px}
+#tab-ledger .t-d{background:#6366f1}
+#tab-ledger .t-p{background:#16a34a}
+#tab-ledger .t-w{background:#0f766e}
+#tab-ledger .t-x{background:#dc2626}
+#tab-ledger .badge{border-radius:10px;padding:1px 8px;font-size:12px;font-weight:700;white-space:nowrap}
+#tab-ledger .ok{background:#dcfce7;color:#166534}
+#tab-ledger .part{background:#fef3c7;color:#92400e}
+#tab-ledger .no{background:#fee2e2;color:#991b1b}
+#tab-ledger .det td,#tab-ledger .det th{font-size:13px;background:#f8fafc}
+#tab-ledger .det th{background:#475569}
+#tab-ledger .bal{color:#b91c1c;font-weight:700}
+#tab-ledger .foot{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+#tab-ledger .box h2{font-size:17px}
+#tab-ledger table{font-size:14px}
+@media(max-width:800px){#tab-ledger .forms{grid-template-columns:1fr}#tab-ledger .cards{grid-template-columns:repeat(2,1fr)}}
+.main-tabs{display:flex;gap:10px;margin-bottom:16px}
+.mt{flex:1;justify-content:center;background:#e0e7ff;color:#3730a3;border-radius:1rem;padding:.8rem}
+.mt:hover{background:#c7d2fe}.mt.on{background:#4f46e5;color:#fff}
+@media print{.main-tabs{display:none!important}}
+</style>
 </head>
 <body>
 <div class="container">
@@ -301,6 +356,11 @@
         </label>
         <button class="sync-btn" id="customQrRemove" onclick="removeCustomQr()" style="display:none;" title="சொந்த QR நீக்கு">✖ QR நீக்கு</button>
     </div>
+    <div class="main-tabs no-print">
+        <button id="mtBal" class="mt on" onclick="switchMainTab('bal')">🧾 வாடிக்கையாளர் & பாக்கி</button>
+        <button id="mtLg" class="mt" onclick="switchMainTab('lg')">💰 கட்டண விவரம் (தேதி வாரி)</button>
+    </div>
+    <div id="tab-balance">
     <div class="dash-grid no-print" id="dashboard">
         <div class="dash-card dash-all" data-filter="all"><div class="d-title">📋 அனைத்தும்</div><div class="d-value" id="dAll">0</div><div class="d-sub">மொத்த பதிவுகள்</div></div>
         <div class="dash-card dash-bal" data-filter="due"><div class="d-title">💰 மொத்த பாக்கி தொகை</div><div class="d-value" id="dBal">₹0</div><div class="d-sub" id="dBalSub">—</div></div>
@@ -373,6 +433,74 @@
             </table>
         </div>
         <div class="footer-stats no-print" id="statsFooter">மொத்த வேலைகள்: 0 | மொத்த பாக்கி: ₹0</div>
+    </div>
+    </div><!-- /tab-balance -->
+    <div id="tab-ledger" style="display:none">
+
+<div class="cards">
+  <div class="lcard c-bal" onclick="LG.setF('due')"><span>மொத்த பாக்கி</span><b id="lgsBal">₹0</b></div>
+  <div class="lcard c-due" onclick="LG.setF('due')"><span>பாக்கி உள்ளவர்கள்</span><b id="lgsDue">0</b></div>
+  <div class="lcard c-rem" onclick="LG.setF('rem')"><span>🔔 நினைவூட்டல் தேவை</span><b id="lgsRem">0</b></div>
+  <div class="lcard c-tod" onclick="LG.setF('all')"><span>இன்று பெற்றது</span><b id="lgsTod">₹0</b></div>
+</div>
+
+<div class="forms">
+  <div class="box">
+    <h2>➕ பாக்கி சேர் (கட்டணம் நிலுவையில்)</h2>
+    <div class="row2">
+      <div><label>பெயர் *</label><input id="lgaName" list="lgcustList" placeholder="வாடிக்கையாளர் பெயர்" onchange="LG.fillMob()"></div>
+      <div><label>கைபேசி எண்</label><input id="lgaMob" type="tel" placeholder="கைபேசி எண்"></div>
+    </div>
+    <datalist id="lgcustList"></datalist>
+    <label>நாள்</label><input id="lgaDate" type="date">
+    <label>வேலைகள் (சேவை & தொகை)</label>
+    <div id="lgitems"></div>
+    <button class="btn-s" onclick="LG.addRow()">➕ மேலும் ஒரு வேலை</button>
+    <button class="btn b-add" onclick="LG.addCharge()">பாக்கியில் சேமி</button>
+  </div>
+
+  <div class="box">
+    <h2>💵 தொகை பெற்றது (பாக்கியிலிருந்து கழி)</h2>
+    <label>வாடிக்கையாளர் *</label><select id="lgpCust" onchange="LG.showBal()"></select>
+    <div class="bal-note" id="lgpBal"></div>
+    <div class="row2">
+      <div><label>பெற்ற தொகை (₹) *</label><input id="lgpAmt" type="number" min="0" step="any"></div>
+      <div><label>நாள்</label><input id="lgpDate" type="date"></div>
+    </div>
+    <div class="row2">
+      <div><label>முறை</label><select id="lgpMode"><option>நேரில் (பணம்)</option><option>UPI</option></select></div>
+      <div><label>குறிப்பு</label><input id="lgpNote" placeholder="விருப்பம்"></div>
+    </div>
+    <button class="btn-s" style="margin-top:8px" onclick="LG.fullAmt()">முழுத் தொகையும்</button>
+    <button class="btn b-pay" onclick="LG.receive()">தொகையைக் கழி</button>
+  </div>
+</div>
+
+<div class="box">
+  <h2>வாடிக்கையாளர் பட்டியல்</h2>
+  <div class="tools">
+    <input id="lgq" placeholder="🔍 பெயர் / கைபேசி மூலம் தேடுக..." oninput="LG.render()">
+    <select id="lgf" onchange="LG.render()">
+      <option value="due">பாக்கி உள்ளவர்கள்</option>
+      <option value="rem">🔔 நினைவூட்டல் தேவை</option>
+      <option value="clear">பாக்கி இல்லாதவர்கள்</option>
+      <option value="all">அனைவரும்</option>
+    </select>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th>வாடிக்கையாளர்</th><th>பழைய பாக்கி</th><th>மொத்தம்</th><th>பெற்றது</th><th>மீதம்</th><th>நினைவூட்டல்</th><th>செயல்</th></tr></thead>
+    <tbody id="lgbody"></tbody>
+  </table></div>
+</div>
+
+<div class="foot">
+  <button class="btn-s" onclick="LG.exportJ()">⬇️ JSON ஏற்றுமதி</button>
+  <button class="btn-s" onclick="document.getElementById('lgimp').click()">⬆️ JSON இறக்குமதி</button>
+  <input type="file" id="lgimp" accept=".json" style="display:none" onchange="LG.importJ(this)">
+</div>
+
+
+
     </div>
 </div>
 
@@ -1184,6 +1312,184 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
     } else {
         loadFromLocal();
     }
+</script>
+<script>
+function switchMainTab(t){
+  document.getElementById('tab-balance').style.display=t==='bal'?'':'none';
+  document.getElementById('tab-ledger').style.display=t==='lg'?'':'none';
+  document.getElementById('mtBal').classList.toggle('on',t==='bal');
+  document.getElementById('mtLg').classList.toggle('on',t==='lg');
+}
+(function(){
+
+const REMIND_DAYS=3;
+const ld=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}};
+let E=ld('dhass_ledger_entries',[]), M=ld('dhass_ledger_meta',{}), open={};
+const $=id=>document.getElementById(id);
+const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const inr=n=>'₹'+(Math.round((+n||0)*100)/100).toLocaleString('en-IN');
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const fd=s=>s?s.split('-').reverse().join('/'):'-';
+const days=s=>Math.max(0,Math.floor((Date.now()-new Date(s+'T00:00:00'))/864e5));
+const mkKey=(n,m)=>{const d=String(m||'').replace(/\D/g,'').slice(-10);return d.length===10?d:'n:'+String(n).trim().toLowerCase()};
+function save(){localStorage.setItem('dhass_ledger_entries',JSON.stringify(E));localStorage.setItem('dhass_ledger_meta',JSON.stringify(M));schedPush()}
+function toast(t){showToast(t)}
+
+// வாடிக்கையாளர் வாரியாகக் குழுவாக்கி, பெற்ற தொகையை பழைய தேதியிலிருந்து கழிக்கும் (FIFO)
+function groups(){
+  const m={};
+  E.slice().sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:a.id-b.id).forEach(e=>{
+    const c=m[e.k]||(m[e.k]={k:e.k,name:e.name,mobile:e.mobile,rows:[],total:0,paid:0});
+    c.name=e.name||c.name;c.mobile=e.mobile||c.mobile;c.rows.push(Object.assign({},e));
+    if(e.t==='c')c.total+=e.amt;else c.paid+=e.amt;
+  });
+  return Object.values(m).map(c=>{
+    let left=c.paid;
+    c.rows.forEach(r=>{if(r.t==='c'){const u=Math.min(left,r.amt);r.got=u;r.rem=r.amt-u;left-=u}});
+    c.bal=Math.round((c.total-c.paid)*100)/100;
+    const o=c.rows.find(r=>r.t==='c'&&r.rem>0.001);c.oldest=o?o.date:null;
+    const mt=M[c.k]||{};c.n=mt.n||0;c.last=mt.last||0;
+    c.needs=c.bal>0&&(!c.last||(Date.now()-c.last)/864e5>=REMIND_DAYS);
+    return c;
+  });
+}
+
+function render(){
+  const G=groups(), q=$('lgq').value.trim().toLowerCase(), f=$('lgf').value, t=today();
+  $('lgsBal').textContent=inr(G.reduce((s,c)=>s+Math.max(0,c.bal),0));
+  $('lgsDue').textContent=G.filter(c=>c.bal>0).length;
+  $('lgsRem').textContent=G.filter(c=>c.needs).length;
+  $('lgsTod').textContent=inr(E.filter(e=>e.t==='p'&&e.date===t).reduce((s,e)=>s+e.amt,0));
+  // தேர்வுப் பட்டியல்கள்
+  const cur=$('lgpCust').value;
+  $('lgpCust').innerHTML='<option value="">-- பாக்கி உள்ளவரைத் தேர்க --</option>'+G.filter(c=>c.bal>0).map(c=>'<option value="'+esc(encodeURIComponent(c.k))+'">'+esc(c.name)+' ('+esc(c.mobile||'')+') - '+inr(c.bal)+'</option>').join('');
+  $('lgpCust').value=cur;showBal();
+  $('lgcustList').innerHTML=G.map(c=>'<option value="'+esc(c.name)+'">'+esc(c.mobile||'')+'</option>').join('');
+  let L=G.filter(c=>(f==='all')||(f==='due'&&c.bal>0)||(f==='rem'&&c.needs)||(f==='clear'&&c.bal<=0));
+  if(q)L=L.filter(c=>(c.name+' '+(c.mobile||'')).toLowerCase().includes(q));
+  L.sort((a,b)=>b.bal-a.bal);
+  if(!L.length){$('lgbody').innerHTML='<tr><td colspan="8" style="text-align:center">பதிவுகள் எதுவுமில்லை</td></tr>';return}
+  $('lgbody').innerHTML=L.map((c,i)=>{
+    const k=esc(encodeURIComponent(c.k));
+    let h='<tr><td>'+(i+1)+'</td><td><b>'+esc(c.name)+'</b><br><small>'+esc(c.mobile||'')+'</small></td>'+
+      '<td>'+(c.oldest?fd(c.oldest)+'<br><span class="badge no">'+days(c.oldest)+' நாள்</span>':'—')+'</td>'+
+      '<td>'+inr(c.total)+'</td><td>'+inr(c.paid)+'</td><td class="bal">'+inr(c.bal)+'</td>'+
+      '<td>'+(c.n?c.n+' முறை<br><small>'+fd(new Date(c.last).toISOString().slice(0,10))+'</small>':'இல்லை')+'</td>'+
+      '<td><button class="tb t-d" onclick="LG.tog(\''+k+'\')">'+(open[c.k]?'▲':'▼')+' விவரம்</button>'+
+      (c.bal>0?'<button class="tb t-p" onclick="LG.payFor(\''+k+'\')">💵 பெற்றது</button><button class="tb t-w" onclick="LG.remind(\''+k+'\')">📲 நினைவூட்டு</button>':'')+'</td></tr>';
+    if(open[c.k]){
+      h+='<tr class="det"><td></td><td colspan="7"><table><thead><tr><th>தேதி</th><th>விவரம்</th><th>தொகை</th><th>நிலை</th><th></th></tr></thead><tbody>'+
+      c.rows.map(r=>{
+        const st=r.t==='p'?'<span class="badge ok">💵 பெறப்பட்டது</span>':(r.rem<=0.001?'<span class="badge ok">✔ முடிந்தது</span>':(r.got>0?'<span class="badge part">பகுதி — மீதம் '+inr(r.rem)+'</span>':'<span class="badge no">நிலுவை</span>'));
+        return '<tr><td>'+fd(r.date)+'</td><td>'+esc(r.desc||'')+'</td><td>'+(r.t==='p'?'− ':'')+inr(r.amt)+'</td><td>'+st+'</td><td><button class="tb t-x" onclick="LG.del('+r.id+')">🗑️</button></td></tr>';
+      }).join('')+'</tbody></table></td></tr>';
+    }
+    return h;
+  }).join('');
+}
+
+function setF(v){$('lgf').value=v;$('lgq').value='';render()}
+function tog(k){k=decodeURIComponent(k);open[k]=!open[k];render()}
+
+// ---- பாக்கி சேர் ----
+function addRow(s,a){
+  const d=document.createElement('div');d.className='item';
+  d.innerHTML='<input class="is" placeholder="சேவை / வேலை (எ.கா: பான் திருத்தம்)" value="'+esc(s||'')+'"><input class="ia" type="number" min="0" step="any" placeholder="₹ தொகை" value="'+esc(a||'')+'"><button class="x" title="நீக்கு">✕</button>';
+  d.querySelector('.x').onclick=()=>{if($('lgitems').children.length>1)d.remove();else{d.querySelector('.is').value='';d.querySelector('.ia').value=''}};
+  $('lgitems').appendChild(d);
+}
+function fillMob(){
+  const n=$('lgaName').value.trim().toLowerCase(), c=groups().find(c=>c.name.toLowerCase()===n);
+  if(c&&c.mobile&&!$('lgaMob').value)$('lgaMob').value=c.mobile;
+}
+function addCharge(){
+  const name=$('lgaName').value.trim(), mob=$('lgaMob').value.trim(), date=$('lgaDate').value||today();
+  const items=[...document.querySelectorAll('#lgitems .item')].map(r=>({s:r.querySelector('.is').value.trim(),a:parseFloat(r.querySelector('.ia').value)||0})).filter(x=>x.a>0);
+  if(!name||!items.length){alert('பெயர் மற்றும் குறைந்தது ஒரு வேலையின் தொகையை உள்ளிடவும்!');return}
+  const k=mkKey(name,mob), now=Date.now();
+  items.forEach((x,i)=>E.push({id:now+i,k,name,mobile:mob,date,t:'c',desc:x.s||'சேவைக் கட்டணம்',amt:x.a}));
+  save();$('lgaName').value='';$('lgaMob').value='';$('lgitems').innerHTML='';addRow();$('lgaDate').value=today();
+  render();toast('✔ பாக்கியில் சேர்க்கப்பட்டது');
+}
+
+// ---- தொகை பெற்றது ----
+function curG(){const k=$('lgpCust').value;return k?groups().find(c=>c.k===decodeURIComponent(k)):null}
+function showBal(){const c=curG();$('lgpBal').textContent=c?'மீதம் பாக்கி: '+inr(c.bal):''}
+function fullAmt(){const c=curG();if(c)$('lgpAmt').value=c.bal}
+function payFor(k){$('lgpCust').value=k;showBal();$('lgpAmt').focus();$('lgpAmt').scrollIntoView({behavior:'smooth',block:'center'})}
+function receive(){
+  const c=curG(), amt=parseFloat($('lgpAmt').value)||0;
+  if(!c||amt<=0){alert('வாடிக்கையாளரைத் தேர்ந்து, பெற்ற தொகையை உள்ளிடவும்!');return}
+  if(amt>c.bal+0.001){alert('பெற்ற தொகை மீதம் உள்ள பாக்கியை ('+inr(c.bal)+') விட அதிகமாக உள்ளது!');return}
+  const note=$('lgpNote').value.trim();
+  E.push({id:Date.now(),k:c.k,name:c.name,mobile:c.mobile,date:$('lgpDate').value||today(),t:'p',desc:$('lgpMode').value+(note?' - '+note:''),amt});
+  save();$('lgpAmt').value='';$('lgpNote').value='';$('lgpCust').value='';
+  render();toast('✔ '+inr(amt)+' கழிக்கப்பட்டது');
+}
+function del(id){
+  if(!confirm('இந்தப் பதிவை நிரந்தரமாக நீக்கவா?'))return;
+  E=E.filter(e=>e.id!==id);save();render();toast('🗑️ நீக்கப்பட்டது');
+}
+
+// ---- WhatsApp நினைவூட்டல் ----
+function remind(k){
+  k=decodeURIComponent(k);const c=groups().find(x=>x.k===k);if(!c)return;
+  const lines=c.rows.filter(r=>r.t==='c'&&r.rem>0.001).map(r=>fd(r.date)+' - '+r.desc+' - '+inr(r.rem)+(r.got>0?' (மீதம்)':''));
+  const txt='வணக்கம் '+c.name+',\nதாஸ் பொது சேவை மையம், தூத்துக்குடி.\nஉங்களுடைய நிலுவைக் கட்டண விவரம்:\n'+lines.join('\n')+'\n\nமொத்த நிலுவை: '+inr(c.bal)+'\nUPI: '+UPI_ID+'\nதயவுசெய்து கட்டணத்தைச் செலுத்தவும். நன்றி!';
+  let d=String(c.mobile||'').replace(/\D/g,'');if(d.length===11&&d[0]==='0')d=d.slice(1);if(d.length===10)d='91'+d;
+  M[k]={n:((M[k]||{}).n||0)+1,last:Date.now()};save();render();
+  window.open('https://wa.me/'+(d.length>=11?d:'')+'?text='+encodeURIComponent(txt),'_blank');
+}
+
+// ---- காப்புப் பிரதி ----
+function exportJ(){
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({entries:E,meta:M})],{type:'application/json'}));
+  a.download='customer_ledger_'+today()+'.json';a.click();
+}
+function importJ(inp){
+  const f=inp.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{try{const j=JSON.parse(r.result);if(!Array.isArray(j.entries))throw 0;
+    if(!confirm('தற்போதைய பதிவுகள் இந்தக் கோப்பால் மாற்றப்படும். தொடரவா?'))return;
+    E=j.entries;M=j.meta||{};save();render();toast('✔ இறக்குமதி முடிந்தது')}catch(e){alert('தவறான கோப்பு!')}inp.value=''};
+  r.readAsText(f);
+}
+
+
+
+// ---- Cloud Sync (பாக்கி கருவியின் அதே gasUrl; சாவி வாரியாக; பெரிய தரவு துண்டாக) ----
+const CK='dhass_ledger_c', NK='dhass_ledger_n', MK='__syncMeta_dhass_ledger', CS=30000;
+let pt=null;
+function post(key,value,t){return fetch(gasUrl,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({key:key,value:value,updatedAt:t})})}
+function schedPush(){if(!gasUrl)return;clearTimeout(pt);pt=setTimeout(push,900)}
+async function push(){
+  if(!gasUrl)return;
+  const s=JSON.stringify({entries:E,meta:M}), parts=[], t=Date.now();
+  for(let i=0;i<s.length;i+=CS)parts.push(s.slice(i,i+CS));
+  try{
+    setSyncStatus('🔄 சின்க் செய்யப்படுகிறது...');
+    for(let i=0;i<parts.length;i++)await post(CK+i,'L'+parts[i],t);
+    await post(NK,String(parts.length),t);
+    localStorage.setItem(MK,String(t));
+    setSyncStatus('✅ சின்க் ஆனது ('+new Date().toLocaleTimeString('ta-IN')+')');
+  }catch(e){setSyncStatus('⚠️ சின்க் பிழை - இணையம் சரிபார்க்கவும்');console.error(e)}
+}
+async function pull(){
+  if(!gasUrl)return;
+  try{
+    const r=await (await fetch(gasUrl+'?action=getAll')).json(), n=r[NK];
+    if(!n||!n.updatedAt){if(E.length)push();return}
+    if(n.updatedAt<=parseInt(localStorage.getItem(MK)||'0',10))return;
+    let s='';
+    for(let i=0;i<parseInt(n.value,10);i++){const c=r[CK+i];if(!c||c.updatedAt!==n.updatedAt)return;s+=String(c.value).slice(1)}
+    const j=JSON.parse(s);E=j.entries||[];M=j.meta||{};
+    localStorage.setItem('dhass_ledger_entries',JSON.stringify(E));localStorage.setItem('dhass_ledger_meta',JSON.stringify(M));
+    localStorage.setItem(MK,String(n.updatedAt));render();
+  }catch(e){console.error('Ledger pull',e)}
+}
+$('lgaDate').value=today();$('lgpDate').value=today();addRow();render();
+pull();setInterval(pull,20000);
+window.LG={setF,fillMob,addRow,addCharge,showBal,fullAmt,receive,render,tog,payFor,remind,del,exportJ,importJ};
+})();
 </script>
 </body>
 </html>
