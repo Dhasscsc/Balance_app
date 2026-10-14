@@ -1,277 +1,51 @@
 <!DOCTYPE html>
 <html lang="ta">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>தாஸ் CSC - வாடிக்கையாளர் & பாக்கி மேலாண்மை | இறக்குமதி ஏற்றுமதி</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', 'Poppins', 'Noto Sans Tamil', system-ui, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #d9e6f5 0%, #f9e6ff 100%);
-            min-height: 100vh;
-            padding: 2rem 1.5rem;
-        }
-
-        .container {
-            max-width: 1500px;
-            margin: 0 auto;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(2px);
-            border-radius: 2rem;
-            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.2);
-            padding: 1.8rem;
-            margin-bottom: 2rem;
-            transition: all 0.2s ease;
-            border: 1px solid rgba(255,255,255,0.6);
-        }
-
-        h1 {
-            font-size: 1.9rem;
-            color: #1e1b4b;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            border-bottom: 3px solid #a78bfa;
-            padding-bottom: 0.75rem;
-            margin-bottom: 1.8rem;
-        }
-
-        h1 small {
-            font-size: 0.9rem;
-            background: #ede9fe;
-            padding: 0.4rem 1rem;
-            border-radius: 40px;
-            font-weight: normal;
-            color: #4c1d95;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
-        }
-
-        .input-group label {
-            font-weight: 600;
-            color: #2d3a6b;
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
-        }
-
-        input, select {
-            padding: 0.8rem 1rem;
-            border-radius: 1.2rem;
-            border: 1.5px solid #ddd6fe;
-            background: white;
-            font-size: 1rem;
-            transition: 0.2s;
-            outline: none;
-        }
-
-        input:focus, select:focus {
-            border-color: #8b5cf6;
-            box-shadow: 0 0 0 3px rgba(139,92,246,0.2);
-        }
-
-        button {
-            background: #4f46e5;
-            color: white;
-            border: none;
-            padding: 0.7rem 1.6rem;
-            border-radius: 2rem;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
-
-        button:hover {
-            background: #4338ca;
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background: #64748b;
-        }
-        .btn-secondary:hover {
-            background: #475569;
-        }
-        .btn-danger {
-            background: #dc2626;
-        }
-        .btn-warning {
-            background: #f59e0b;
-        }
-        .btn-success {
-            background: #10b981;
-        }
-
-        .action-bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 1rem;
-            border-top: 1px solid #e2e8f0;
-            padding-top: 1.5rem;
-        }
-
-        .search-box {
-            display: flex;
-            gap: 8px;
-            flex: 1;
-            max-width: 380px;
-        }
-        .search-box input {
-            flex: 1;
-        }
-
-        .import-export-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            background: #f8fafc;
-            padding: 0.8rem 1rem;
-            border-radius: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .table-wrapper {
-            overflow-x: auto;
-            border-radius: 1.5rem;
-            background: white;
-            padding: 0.2rem;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.85rem;
-        }
-
-        th {
-            background: #f1f5f9;
-            padding: 1rem 0.8rem;
-            text-align: left;
-            font-weight: 700;
-            color: #1e293b;
-        }
-
-        td {
-            padding: 0.9rem 0.8rem;
-            border-bottom: 1px solid #eef2ff;
-            vertical-align: middle;
-        }
-
-        .balance-due {
-            background: #fff7ed;
-            font-weight: bold;
-            color: #c2410c;
-        }
-
-        .job-name-cell {
-            font-weight: 500;
-            background-color: #faf5ff;
-            border-radius: 20px;
-        }
-
-        .actions-cell {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .icon-btn {
-            background: transparent;
-            box-shadow: none;
-            padding: 6px 12px;
-            font-size: 0.75rem;
-            border-radius: 2rem;
-        }
-        .icon-btn.whatsapp { background: #25D366; color: white; }
-        /* ---- Dashboard ---- */
-        .dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-bottom: 1.5rem; }
-        .dash-card { border: 2px solid transparent; border-radius: 1.4rem; padding: 14px 16px; cursor: pointer; color: #fff; box-shadow: 0 8px 18px -8px rgba(0,0,0,.35); transition: transform .15s, box-shadow .15s, border-color .15s; user-select: none; }
-        .dash-card:hover { transform: translateY(-3px); }
-        .dash-card.active { border-color: #1e1b4b; box-shadow: 0 0 0 4px rgba(255,255,255,.9), 0 10px 22px -6px rgba(0,0,0,.45); transform: translateY(-3px); }
-        .dash-card .d-title { font-size: .9rem; opacity: .95; }
-        .dash-card .d-value { font-size: 1.9rem; font-weight: 800; margin: 4px 0 2px; }
-        .dash-card .d-sub { font-size: .78rem; opacity: .9; }
-        .dash-all { background: linear-gradient(135deg,#6366f1,#4338ca); }
-        .dash-bal { background: linear-gradient(135deg,#ef4444,#b91c1c); }
-        .dash-due { background: linear-gradient(135deg,#f97316,#c2410c); }
-        .dash-paid { background: linear-gradient(135deg,#22c55e,#15803d); }
-        .dash-remind { background: linear-gradient(135deg,#f59e0b,#b45309); }
-        .filter-chip { display:inline-block; font-size:.85rem; background:#ede9fe; color:#4c1d95; padding:4px 12px; border-radius:20px; margin-left:8px; }
-        @media print { .dash-grid, .filter-chip { display: none !important; } }
-        .icon-btn.img { background: #0ea5e9; color: white; }
-        .icon-btn.remind { background: #f59e0b; color: white; }
-        .icon-btn.print { background: #334155; color: white; }
-        .icon-btn.edit { background: #3b82f6; color: white; }
-        .icon-btn.delete { background: #ef4444; color: white; }
-
-        @media print {
-            body { background: white; padding: 0; margin: 0; }
-            .no-print, button, .action-bar, .form-grid, h1 small, .search-box, .actions-cell .icon-btn, .card:first-child .action-bar, .import-export-group { display: none !important; }
-            .card { box-shadow: none; padding: 0; margin: 0; }
-            table { width: 100%; }
-            th, td { border: 1px solid #ccc; }
-        }
-
-        .footer-stats {
-            margin-top: 1rem;
-            font-size: 0.85rem;
-            background: #f8fafc;
-            padding: 0.8rem;
-            border-radius: 1rem;
-            text-align: center;
-        }
-
-        .toast-msg {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: #1e293b;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 40px;
-            font-size: 0.9rem;
-            z-index: 1000;
-            box-shadow: 0 5px 12px rgba(0,0,0,0.2);
-            transition: 0.2s;
-        }
-        .required-star::after { content: " *"; color: red; }
-        .upi-badge {
-            background: #e0e7ff;
-            border-radius: 40px;
-            padding: 4px 12px;
-            font-size: 0.75rem;
-            font-family: monospace;
-        }
-        .sync-bar {
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>வாடிக்கையாளர் கட்டண விவரம் - தாஸ் பொது சேவை மையம்</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@400;600;700&display=swap');
+*{box-sizing:border-box}
+body{font-family:'Mukta Malar','Latha',sans-serif;background:#f4f6f9;margin:0;padding:12px 16px;color:#0f172a}
+h1{margin:0 0 4px;text-align:center;color:#1e3a8a;font-size:24px}
+.sub{text-align:center;font-size:13px;color:#475569;margin-bottom:14px}
+.cards{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px}
+.card{background:#fff;border-radius:8px;padding:10px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.1);border-top:4px solid #94a3b8;cursor:pointer}
+.card b{display:block;font-size:24px}.card span{font-size:13px}
+.c-bal{border-top-color:#dc2626}.c-bal b{color:#b91c1c}
+.c-due{border-top-color:#2563eb}.c-due b{color:#1d4ed8}
+.c-rem{border-top-color:#f59e0b}.c-rem b{color:#b45309}
+.c-tod{border-top-color:#16a34a}.c-tod b{color:#15803d}
+.forms{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.box{background:#fff;border-radius:8px;padding:14px;box-shadow:0 2px 6px rgba(0,0,0,.1)}
+.box h2{margin:0 0 10px;font-size:17px;color:#1e3a8a;border-bottom:1px solid #e2e8f0;padding-bottom:6px}
+label{display:block;font-size:13px;font-weight:600;margin:6px 0 3px}
+input,select{width:100%;padding:9px;border:1px solid #cbd5e1;border-radius:4px;font-family:inherit;font-size:14px;min-width:0}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.item{display:grid;grid-template-columns:1fr 110px 36px;gap:6px;margin-bottom:6px}
+.x{background:#fee2e2;color:#b91c1c;border:1px solid #fecaca;border-radius:4px;cursor:pointer;font-weight:bold}
+button{font-family:inherit;cursor:pointer}
+.btn{width:100%;margin-top:10px;padding:11px;border:0;border-radius:5px;color:#fff;font-size:15px;font-weight:700}
+.b-add{background:#0f766e}.b-pay{background:#16a34a}
+.btn-s{background:#e0e7ff;color:#3730a3;border:1px solid #c7d2fe;border-radius:4px;padding:6px 12px;font-size:13px;font-weight:700}
+.bal-note{margin-top:6px;font-weight:700;color:#b91c1c}
+.tools{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px}
+.tools input{flex:1;min-width:180px}.tools select{width:auto}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;background:#fff;font-size:14px}
+th,td{border:1px solid #e2e8f0;padding:8px;text-align:left;vertical-align:top}
+th{background:#1e3a8a;color:#fff;white-space:nowrap}
+.tb{border:0;border-radius:4px;padding:5px 8px;font-size:12px;font-weight:700;color:#fff;margin:1px}
+.t-d{background:#6366f1}.t-p{background:#16a34a}.t-w{background:#0f766e}.t-x{background:#dc2626}
+.badge{border-radius:10px;padding:1px 8px;font-size:12px;font-weight:700;white-space:nowrap}
+.ok{background:#dcfce7;color:#166534}.part{background:#fef3c7;color:#92400e}.no{background:#fee2e2;color:#991b1b}
+.det td,.det th{font-size:13px;background:#f8fafc}.det th{background:#475569}
+.bal{color:#b91c1c;font-weight:700}
+#toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#1e293b;color:#fff;padding:9px 18px;border-radius:20px;font-size:14px;display:none;z-index:9}
+.foot{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+@media(max-width:800px){.forms{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,1fr)}}
+.sync-bar {
             display: flex; align-items: center; justify-content: center; gap: 10px;
             flex-wrap: wrap; margin-bottom: 14px; font-size: 12px;
         }
@@ -281,67 +55,18 @@
             border-radius: 20px; padding: 4px 12px; font-size: 12px; cursor: pointer;
         }
         .sync-btn:hover { background: #dbe4ff; }
-        @media print { .sync-bar { display: none !important; } }
-    #tab-ledger 600;700&display=swap');
-*{box-sizing:border-box}
-#tab-ledger .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
-#tab-ledger .lcard{background:#fff;border-radius:8px;padding:10px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.1);border-top:4px solid #94a3b8;cursor:pointer}
-#tab-ledger .lcard b{display:block;font-size:24px}
-#tab-ledger .lcard span{font-size:13px}
-#tab-ledger .c-bal{border-top-color:#dc2626}
-#tab-ledger .c-bal b{color:#b91c1c}
-#tab-ledger .c-due{border-top-color:#2563eb}
-#tab-ledger .c-due b{color:#1d4ed8}
-#tab-ledger .c-rem{border-top-color:#f59e0b}
-#tab-ledger .c-rem b{color:#b45309}
-#tab-ledger .c-tod{border-top-color:#16a34a}
-#tab-ledger .c-tod b{color:#15803d}
-#tab-ledger .forms{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-#tab-ledger .box{background:#fff;border-radius:8px;padding:14px;box-shadow:0 2px 6px rgba(0,0,0,.1)}
-#tab-ledger .box h2{margin:0 0 10px;font-size:17px;color:#1e3a8a;border-bottom:1px solid #e2e8f0;padding-bottom:6px}
-#tab-ledger label{display:block;font-size:13px;font-weight:600;margin:6px 0 3px}
-#tab-ledger input,#tab-ledger select{width:100%;padding:9px;border:1px solid #cbd5e1;border-radius:4px;font-family:inherit;font-size:14px;min-width:0}
-#tab-ledger .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-#tab-ledger .item{display:grid;grid-template-columns:1fr 110px 36px;gap:6px;margin-bottom:6px}
-#tab-ledger .x{background:#fee2e2;color:#b91c1c;border:1px solid #fecaca;border-radius:4px;cursor:pointer;font-weight:bold}
-#tab-ledger button{font-family:inherit;cursor:pointer}
-#tab-ledger .btn{width:100%;margin-top:10px;padding:11px;border:0;border-radius:5px;color:#fff;font-size:15px;font-weight:700}
-#tab-ledger .b-add{background:#0f766e}
-#tab-ledger .b-pay{background:#16a34a}
-#tab-ledger .btn-s{background:#e0e7ff;color:#3730a3;border:1px solid #c7d2fe;border-radius:4px;padding:6px 12px;font-size:13px;font-weight:700}
-#tab-ledger .bal-note{margin-top:6px;font-weight:700;color:#b91c1c}
-#tab-ledger .tools{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px}
-#tab-ledger .tools input{flex:1;min-width:180px}
-#tab-ledger .tools select{width:auto}
-#tab-ledger .tw{overflow-x:auto}
-#tab-ledger table{width:100%;border-collapse:collapse;background:#fff;font-size:14px}
-#tab-ledger th,#tab-ledger td{border:1px solid #e2e8f0;padding:8px;text-align:left;vertical-align:top}
-#tab-ledger th{background:#1e3a8a;color:#fff;white-space:nowrap}
-#tab-ledger .tb{border:0;border-radius:4px;padding:5px 8px;font-size:12px;font-weight:700;color:#fff;margin:1px}
-#tab-ledger .t-d{background:#6366f1}
-#tab-ledger .t-p{background:#16a34a}
-#tab-ledger .t-w{background:#0f766e}
-#tab-ledger .t-x{background:#dc2626}
-#tab-ledger .badge{border-radius:10px;padding:1px 8px;font-size:12px;font-weight:700;white-space:nowrap}
-#tab-ledger .ok{background:#dcfce7;color:#166534}
-#tab-ledger .part{background:#fef3c7;color:#92400e}
-#tab-ledger .no{background:#fee2e2;color:#991b1b}
-#tab-ledger .det td,#tab-ledger .det th{font-size:13px;background:#f8fafc}
-#tab-ledger .det th{background:#475569}
-#tab-ledger .bal{color:#b91c1c;font-weight:700}
-#tab-ledger .foot{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-#tab-ledger .box h2{font-size:17px}
-#tab-ledger table{font-size:14px}
-@media(max-width:800px){#tab-ledger .forms{grid-template-columns:1fr}#tab-ledger .cards{grid-template-columns:repeat(2,1fr)}}
-.main-tabs{display:flex;gap:10px;margin-bottom:16px}
-.mt{flex:1;justify-content:center;background:#e0e7ff;color:#3730a3;border-radius:1rem;padding:.8rem}
-.mt:hover{background:#c7d2fe}.mt.on{background:#4f46e5;color:#fff}
-@media print{.main-tabs{display:none!important}}
+#syncStatus{color:#5e6f8d;font-weight:600}
+.sync-btn{background:#eef2ff;border:1px solid #d7e0ff;color:#4338ca;border-radius:20px;padding:4px 12px;font-size:12px;cursor:pointer}
+.c-all{border-top-color:#6366f1}.c-all b{color:#4338ca}
+.c-paid{border-top-color:#16a34a}.c-paid b{color:#15803d}
+.t-i{background:#0ea5e9}.t-r{background:#f59e0b}.t-n{background:#334155}.t-e{background:#3b82f6}
+.card small{display:block;font-size:11px;color:#475569}
 </style>
 </head>
 <body>
-<div class="container">
-    <div class="sync-bar">
+<h1>💰 வாடிக்கையாளர் கட்டண விவரம்</h1>
+<div class="sub">தாஸ் பொது சேவை மையம் — வாடிக்கையாளர் & பாக்கி (தேதி வாரி)</div>
+<div class="sync-bar">
         <span id="syncStatus">☁️ Sync அமைக்கப்படவில்லை</span>
         <button class="sync-btn" onclick="manualSync()" title="இப்போதே சின்க் செய்">🔄 இப்போதே சின்க்</button>
         <button class="sync-btn" onclick="promptGasUrl()" title="Sync URL அமை">⚙️ Sync அமை</button>
@@ -356,402 +81,198 @@
         </label>
         <button class="sync-btn" id="customQrRemove" onclick="removeCustomQr()" style="display:none;" title="சொந்த QR நீக்கு">✖ QR நீக்கு</button>
     </div>
-    <div class="main-tabs no-print">
-        <button id="mtBal" class="mt on" onclick="switchMainTab('bal')">🧾 வாடிக்கையாளர் & பாக்கி</button>
-        <button id="mtLg" class="mt" onclick="switchMainTab('lg')">💰 கட்டண விவரம் (தேதி வாரி)</button>
-    </div>
-    <div id="tab-balance">
-    <div class="dash-grid no-print" id="dashboard">
-        <div class="dash-card dash-all" data-filter="all"><div class="d-title">📋 அனைத்தும்</div><div class="d-value" id="dAll">0</div><div class="d-sub">மொத்த பதிவுகள்</div></div>
-        <div class="dash-card dash-bal" data-filter="due"><div class="d-title">💰 மொத்த பாக்கி தொகை</div><div class="d-value" id="dBal">₹0</div><div class="d-sub" id="dBalSub">—</div></div>
-        <div class="dash-card dash-due" data-filter="due"><div class="d-title">⏳ செலுத்த வேண்டியவர்கள்</div><div class="d-value" id="dDue">0</div><div class="d-sub">பாக்கி உள்ளவர்கள்</div></div>
-        <div class="dash-card dash-paid" data-filter="paid"><div class="d-title">✅ செலுத்தியவர்கள்</div><div class="d-value" id="dPaid">0</div><div class="d-sub" id="dPaidSub">—</div></div>
-        <div class="dash-card dash-remind" data-filter="remind"><div class="d-title">🔔 நினைவூட்ட வேண்டியது</div><div class="d-value" id="dRemind">0</div><div class="d-sub" id="dRemindSub">—</div></div>
-    </div>
-    <div class="card">
-        <h1>
-            🧾 தாஸ் பொது சேவை மையம் - வாடிக்கையாளர் & பாக்கி
-            <small>📁 ஏற்றுமதி/இறக்குமதி | தானியங்கி இணைப்பு</small>
-        </h1>
-        
-        <!-- Import / Export Zone -->
-        <div class="import-export-group no-print">
-            <button id="exportDataBtn" class="btn-success">📤 எக்ஸ்போர்ட் (JSON)</button>
-            <button id="exportCSVBtn" class="btn-success">📊 எக்ஸ்போர்ட் (CSV)</button>
-            <label for="importFileInput" class="btn-secondary" style="cursor:pointer; display:inline-flex; align-items:center; gap:6px;">📂 இறக்குமதி செய் (JSON)</label>
-            <input type="file" id="importFileInput" accept=".json" style="display:none;">
-            <button id="sampleDataBtn" class="btn-warning">✨ மாதிரி தரவு சேர்</button>
-            <span class="upi-badge">🏦 UPI: 9843232324@ybl</span>
-        </div>
-
-        <div class="form-grid">
-            <div class="input-group">
-                <label>👤 வாடிக்கையாளர் பெயர் <span style="color:red;">*</span></label>
-                <input type="text" id="custName" placeholder="எ.கா: டேரில்" autocomplete="off">
-            </div>
-            <div class="input-group">
-                <label>📋 வேலையின் பெயர் <span style="color:red;">*</span></label>
-                <input type="text" id="jobName" placeholder="எ.கா: Vi Recharge, பெயிண்டிங்" autocomplete="off">
-            </div>
-            <div class="input-group">
-                <label>📞 வாட்ஸ்அப் எண் (10 இலக்கங்கள்)</label>
-                <input type="tel" id="whatsappNo" placeholder="9876543210">
-            </div>
-            <div class="input-group">
-                <label>💰 மொத்த வேலை தொகை (₹)</label>
-                <input type="number" id="totalAmount" placeholder="மொத்தத் தொகை" step="0.01" value="0">
-            </div>
-            <div class="input-group">
-                <label>✅ செலுத்திய தொகை (₹)</label>
-                <input type="number" id="paidAmount" placeholder="செலுத்திய தொகை" step="0.01" value="0">
-            </div>
-        </div>
-        <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-end;">
-            <button id="addBtn">➕ பதிவு / புதுப்பிப்பு</button>
-            <button id="updateBtn" class="btn-secondary" style="display:none;">✏️ மேம்படுத்து</button>
-            <button id="cancelEditBtn" class="btn-secondary" style="display:none;">❌ ரத்து செய்</button>
-        </div>
-        <div class="action-bar no-print">
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="🔍 பெயர் / வேலை / எண் மூலம் தேடுக...">
-                <button id="clearSearchBtn" class="btn-secondary" style="background:#94a3b8;">Clear</button>
-            </div>
-            <div>
-                <button id="globalPrintBtn">🖨️ முழு பட்டியலை அச்சிடு</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="card">
-        <h2 style="font-size:1.5rem; margin-bottom: 1rem;">📌 வேலை & வாடிக்கையாளர் பட்டியல் <span class="filter-chip" id="filterChip" style="display:none;"></span></h2>
-        <div class="table-wrapper">
-            <table id="customerTable">
-                <thead>
-                    <tr><th>#</th><th>வாடிக்கையாளர்</th><th>📋 வேலையின் பெயர்</th><th>📞 வாட்ஸ்அப்</th><th>மொத்தம் (₹)</th><th>செலுத்தியது (₹)</th><th>மீதி பாக்கி (₹)</th><th>செயல்கள்</th></tr>
-                </thead>
-                <tbody id="tableBody"><tr><td colspan="8" style="text-align:center;">வேலை / வாடிக்கையாளர் தரவு இல்லை.</td></tr></tbody>
-            </table>
-        </div>
-        <div class="footer-stats no-print" id="statsFooter">மொத்த வேலைகள்: 0 | மொத்த பாக்கி: ₹0</div>
-    </div>
-    </div><!-- /tab-balance -->
-    <div id="tab-ledger" style="display:none">
 
 <div class="cards">
-  <div class="lcard c-bal" onclick="LG.setF('due')"><span>மொத்த பாக்கி</span><b id="lgsBal">₹0</b></div>
-  <div class="lcard c-due" onclick="LG.setF('due')"><span>பாக்கி உள்ளவர்கள்</span><b id="lgsDue">0</b></div>
-  <div class="lcard c-rem" onclick="LG.setF('rem')"><span>🔔 நினைவூட்டல் தேவை</span><b id="lgsRem">0</b></div>
-  <div class="lcard c-tod" onclick="LG.setF('all')"><span>இன்று பெற்றது</span><b id="lgsTod">₹0</b></div>
+  <div class="card c-all" onclick="setF('all')"><span>📋 அனைவரும்</span><b id="sAll">0</b></div>
+  <div class="card c-bal" onclick="setF('due')"><span>💰 மொத்த பாக்கி</span><b id="sBal">₹0</b><small id="sTod"></small></div>
+  <div class="card c-due" onclick="setF('due')"><span>⏳ செலுத்த வேண்டியவர்கள்</span><b id="sDue">0</b></div>
+  <div class="card c-paid" onclick="setF('clear')"><span>✅ செலுத்தியவர்கள்</span><b id="sPaid">0</b></div>
+  <div class="card c-rem" onclick="setF('rem')"><span>🔔 நினைவூட்ட வேண்டியது</span><b id="sRem">0</b></div>
 </div>
 
 <div class="forms">
   <div class="box">
     <h2>➕ பாக்கி சேர் (கட்டணம் நிலுவையில்)</h2>
     <div class="row2">
-      <div><label>பெயர் *</label><input id="lgaName" list="lgcustList" placeholder="வாடிக்கையாளர் பெயர்" onchange="LG.fillMob()"></div>
-      <div><label>கைபேசி எண்</label><input id="lgaMob" type="tel" placeholder="கைபேசி எண்"></div>
+      <div><label>பெயர் *</label><input id="aName" list="custList" placeholder="வாடிக்கையாளர் பெயர்" onchange="fillMob()"></div>
+      <div><label>கைபேசி எண்</label><input id="aMob" type="tel" placeholder="கைபேசி எண்"></div>
     </div>
-    <datalist id="lgcustList"></datalist>
-    <label>நாள்</label><input id="lgaDate" type="date">
+    <datalist id="custList"></datalist>
+    <label>நாள்</label><input id="aDate" type="date">
     <label>வேலைகள் (சேவை & தொகை)</label>
-    <div id="lgitems"></div>
-    <button class="btn-s" onclick="LG.addRow()">➕ மேலும் ஒரு வேலை</button>
-    <button class="btn b-add" onclick="LG.addCharge()">பாக்கியில் சேமி</button>
+    <div id="items"></div>
+    <button class="btn-s" onclick="addRow()">➕ மேலும் ஒரு வேலை</button>
+    <button class="btn b-add" onclick="addCharge()">பாக்கியில் சேமி</button>
   </div>
 
   <div class="box">
     <h2>💵 தொகை பெற்றது (பாக்கியிலிருந்து கழி)</h2>
-    <label>வாடிக்கையாளர் *</label><select id="lgpCust" onchange="LG.showBal()"></select>
-    <div class="bal-note" id="lgpBal"></div>
+    <label>வாடிக்கையாளர் *</label><select id="pCust" onchange="showBal()"></select>
+    <div class="bal-note" id="pBal"></div>
     <div class="row2">
-      <div><label>பெற்ற தொகை (₹) *</label><input id="lgpAmt" type="number" min="0" step="any"></div>
-      <div><label>நாள்</label><input id="lgpDate" type="date"></div>
+      <div><label>பெற்ற தொகை (₹) *</label><input id="pAmt" type="number" min="0" step="any"></div>
+      <div><label>நாள்</label><input id="pDate" type="date"></div>
     </div>
     <div class="row2">
-      <div><label>முறை</label><select id="lgpMode"><option>நேரில் (பணம்)</option><option>UPI</option></select></div>
-      <div><label>குறிப்பு</label><input id="lgpNote" placeholder="விருப்பம்"></div>
+      <div><label>முறை</label><select id="pMode"><option>நேரில் (பணம்)</option><option>UPI</option></select></div>
+      <div><label>குறிப்பு</label><input id="pNote" placeholder="விருப்பம்"></div>
     </div>
-    <button class="btn-s" style="margin-top:8px" onclick="LG.fullAmt()">முழுத் தொகையும்</button>
-    <button class="btn b-pay" onclick="LG.receive()">தொகையைக் கழி</button>
+    <button class="btn-s" style="margin-top:8px" onclick="fullAmt()">முழுத் தொகையும்</button>
+    <button class="btn b-pay" onclick="receive()">தொகையைக் கழி</button>
   </div>
 </div>
 
 <div class="box">
   <h2>வாடிக்கையாளர் பட்டியல்</h2>
   <div class="tools">
-    <input id="lgq" placeholder="🔍 பெயர் / கைபேசி மூலம் தேடுக..." oninput="LG.render()">
-    <select id="lgf" onchange="LG.render()">
+    <input id="q" placeholder="🔍 பெயர் / கைபேசி மூலம் தேடுக..." oninput="render()">
+    <select id="f" onchange="render()">
       <option value="due">பாக்கி உள்ளவர்கள்</option>
       <option value="rem">🔔 நினைவூட்டல் தேவை</option>
-      <option value="clear">பாக்கி இல்லாதவர்கள்</option>
+      <option value="clear">✅ செலுத்தியவர்கள் (பாக்கி இல்லை)</option>
       <option value="all">அனைவரும்</option>
     </select>
   </div>
   <div class="tw"><table>
     <thead><tr><th>#</th><th>வாடிக்கையாளர்</th><th>பழைய பாக்கி</th><th>மொத்தம்</th><th>பெற்றது</th><th>மீதம்</th><th>நினைவூட்டல்</th><th>செயல்</th></tr></thead>
-    <tbody id="lgbody"></tbody>
+    <tbody id="body"></tbody>
   </table></div>
 </div>
 
 <div class="foot">
-  <button class="btn-s" onclick="LG.exportJ()">⬇️ JSON ஏற்றுமதி</button>
-  <button class="btn-s" onclick="document.getElementById('lgimp').click()">⬆️ JSON இறக்குமதி</button>
-  <input type="file" id="lgimp" accept=".json" style="display:none" onchange="LG.importJ(this)">
+  <button class="btn-s" id="exportDataBtn">📤 எக்ஸ்போர்ட் (JSON)</button>
+  <button class="btn-s" id="exportCSVBtn">📊 எக்ஸ்போர்ட் (CSV)</button>
+  <button class="btn-s" onclick="document.getElementById('importFileInput').click()">📂 இறக்குமதி (JSON)</button>
+  <input type="file" id="importFileInput" accept=".json" style="display:none">
+  <button class="btn-s" onclick="printFullList()">🖨️ முழு பட்டியலை அச்சிடு</button>
+  <span class="badge ok">🏦 UPI: 9843232324@ybl</span>
 </div>
-
-
-
-    </div>
-</div>
+<div id="toast"></div>
 
 <script>
 /* QR Code Generator (MIT, Kazuhiko Arase) - offline, inlined */
 var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],f={},c=function(t,r){o=function(t){for(var r=new Array(t),e=0;e<t;e+=1){r[e]=new Array(t);for(var n=0;n<t;n+=1)r[e][n]=null}return r}(i=4*e+17),l(0,0),l(i-7,0),l(0,i-7),s(),h(),d(t,r),e>=7&&v(t),null==a&&(a=p(e,n,u)),w(a,r)},l=function(t,r){for(var e=-1;e<=7;e+=1)if(!(t+e<=-1||i<=t+e))for(var n=-1;n<=7;n+=1)r+n<=-1||i<=r+n||(o[t+e][r+n]=0<=e&&e<=6&&(0==n||6==n)||0<=n&&n<=6&&(0==e||6==e)||2<=e&&e<=4&&2<=n&&n<=4)},h=function(){for(var t=8;t<i-8;t+=1)null==o[t][6]&&(o[t][6]=t%2==0);for(var r=8;r<i-8;r+=1)null==o[6][r]&&(o[6][r]=r%2==0)},s=function(){for(var t=B.getPatternPosition(e),r=0;r<t.length;r+=1)for(var n=0;n<t.length;n+=1){var i=t[r],a=t[n];if(null==o[i][a])for(var u=-2;u<=2;u+=1)for(var f=-2;f<=2;f+=1)o[i+u][a+f]=-2==u||2==u||-2==f||2==f||0==u&&0==f}},v=function(t){for(var r=B.getBCHTypeNumber(e),n=0;n<18;n+=1){var a=!t&&1==(r>>n&1);o[Math.floor(n/3)][n%3+i-8-3]=a}for(n=0;n<18;n+=1){a=!t&&1==(r>>n&1);o[n%3+i-8-3][Math.floor(n/3)]=a}},d=function(t,r){for(var e=n<<3|r,a=B.getBCHTypeInfo(e),u=0;u<15;u+=1){var f=!t&&1==(a>>u&1);u<6?o[u][8]=f:u<8?o[u+1][8]=f:o[i-15+u][8]=f}for(u=0;u<15;u+=1){f=!t&&1==(a>>u&1);u<8?o[8][i-u-1]=f:u<9?o[8][15-u-1+1]=f:o[8][15-u-1]=f}o[i-8][8]=!t},w=function(t,r){for(var e=-1,n=i-1,a=7,u=0,f=B.getMaskFunction(r),c=i-1;c>0;c-=2)for(6==c&&(c-=1);;){for(var g=0;g<2;g+=1)if(null==o[n][c-g]){var l=!1;u<t.length&&(l=1==(t[u]>>>a&1)),f(n,c-g)&&(l=!l),o[n][c-g]=l,-1==(a-=1)&&(u+=1,a=7)}if((n+=e)<0||i<=n){n-=e,e=-e;break}}},p=function(t,r,e){for(var n=A.getRSBlocks(t,r),o=b(),i=0;i<e.length;i+=1){var a=e[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var u=0;for(i=0;i<n.length;i+=1)u+=n[i].dataCount;if(o.getLengthInBits()>8*u)throw"code length overflow. ("+o.getLengthInBits()+">"+8*u+")";for(o.getLengthInBits()+4<=8*u&&o.put(0,4);o.getLengthInBits()%8!=0;)o.putBit(!1);for(;!(o.getLengthInBits()>=8*u||(o.put(236,8),o.getLengthInBits()>=8*u));)o.put(17,8);return function(t,r){for(var e=0,n=0,o=0,i=new Array(r.length),a=new Array(r.length),u=0;u<r.length;u+=1){var f=r[u].dataCount,c=r[u].totalCount-f;n=Math.max(n,f),o=Math.max(o,c),i[u]=new Array(f);for(var g=0;g<i[u].length;g+=1)i[u][g]=255&t.getBuffer()[g+e];e+=f;var l=B.getErrorCorrectPolynomial(c),h=k(i[u],l.getLength()-1).mod(l);for(a[u]=new Array(l.getLength()-1),g=0;g<a[u].length;g+=1){var s=g+h.getLength()-a[u].length;a[u][g]=s>=0?h.getAt(s):0}}var v=0;for(g=0;g<r.length;g+=1)v+=r[g].totalCount;var d=new Array(v),w=0;for(g=0;g<n;g+=1)for(u=0;u<r.length;u+=1)g<i[u].length&&(d[w]=i[u][g],w+=1);for(g=0;g<o;g+=1)for(u=0;u<r.length;u+=1)g<a[u].length&&(d[w]=a[u][g],w+=1);return d}(o,n)};f.addData=function(t,r){var e=null;switch(r=r||"Byte"){case"Numeric":e=M(t);break;case"Alphanumeric":e=x(t);break;case"Byte":e=m(t);break;case"Kanji":e=L(t);break;default:throw"mode:"+r}u.push(e),a=null},f.isDark=function(t,r){if(t<0||i<=t||r<0||i<=r)throw t+","+r;return o[t][r]},f.getModuleCount=function(){return i},f.make=function(){if(e<1){for(var t=1;t<40;t++){for(var r=A.getRSBlocks(t,n),o=b(),i=0;i<u.length;i++){var a=u[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var g=0;for(i=0;i<r.length;i++)g+=r[i].dataCount;if(o.getLengthInBits()<=8*g)break}e=t}c(!1,function(){for(var t=0,r=0,e=0;e<8;e+=1){c(!0,e);var n=B.getLostPoint(f);(0==e||t>n)&&(t=n,r=e)}return r}())},f.createTableTag=function(t,r){t=t||2;var e="";e+='<table style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: "+(r=void 0===r?4*t:r)+"px;",e+='">',e+="<tbody>";for(var n=0;n<f.getModuleCount();n+=1){e+="<tr>";for(var o=0;o<f.getModuleCount();o+=1)e+='<td style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: 0px;",e+=" width: "+t+"px;",e+=" height: "+t+"px;",e+=" background-color: ",e+=f.isDark(n,o)?"#000000":"#ffffff",e+=";",e+='"/>';e+="</tr>"}return e+="</tbody>",e+="</table>"},f.createSvgTag=function(t,r,e,n){var o={};"object"==typeof arguments[0]&&(t=(o=arguments[0]).cellSize,r=o.margin,e=o.alt,n=o.title),t=t||2,r=void 0===r?4*t:r,(e="string"==typeof e?{text:e}:e||{}).text=e.text||null,e.id=e.text?e.id||"qrcode-description":null,(n="string"==typeof n?{text:n}:n||{}).text=n.text||null,n.id=n.text?n.id||"qrcode-title":null;var i,a,u,c,g=f.getModuleCount()*t+2*r,l="";for(c="l"+t+",0 0,"+t+" -"+t+",0 0,-"+t+"z ",l+='<svg version="1.1" xmlns="http://www.w3.org/2000/svg"',l+=o.scalable?"":' width="'+g+'px" height="'+g+'px"',l+=' viewBox="0 0 '+g+" "+g+'" ',l+=' preserveAspectRatio="xMinYMin meet"',l+=n.text||e.text?' role="img" aria-labelledby="'+y([n.id,e.id].join(" ").trim())+'"':"",l+=">",l+=n.text?'<title id="'+y(n.id)+'">'+y(n.text)+"</title>":"",l+=e.text?'<description id="'+y(e.id)+'">'+y(e.text)+"</description>":"",l+='<rect width="100%" height="100%" fill="white" cx="0" cy="0"/>',l+='<path d="',a=0;a<f.getModuleCount();a+=1)for(u=a*t+r,i=0;i<f.getModuleCount();i+=1)f.isDark(a,i)&&(l+="M"+(i*t+r)+","+u+c);return l+='" stroke="transparent" fill="black"/>',l+="</svg>"},f.createDataURL=function(t,r){t=t||2,r=void 0===r?4*t:r;var e=f.getModuleCount()*t+2*r,n=r,o=e-r;return I(e,e,function(r,e){if(n<=r&&r<o&&n<=e&&e<o){var i=Math.floor((r-n)/t),a=Math.floor((e-n)/t);return f.isDark(a,i)?0:1}return 1})},f.createImgTag=function(t,r,e){t=t||2,r=void 0===r?4*t:r;var n=f.getModuleCount()*t+2*r,o="";return o+="<img",o+=' src="',o+=f.createDataURL(t,r),o+='"',o+=' width="',o+=n,o+='"',o+=' height="',o+=n,o+='"',e&&(o+=' alt="',o+=y(e),o+='"'),o+="/>"};var y=function(t){for(var r="",e=0;e<t.length;e+=1){var n=t.charAt(e);switch(n){case"<":r+="&lt;";break;case">":r+="&gt;";break;case"&":r+="&amp;";break;case'"':r+="&quot;";break;default:r+=n}}return r};return f.createASCII=function(t,r){if((t=t||1)<2)return function(t){t=void 0===t?2:t;var r,e,n,o,i,a=1*f.getModuleCount()+2*t,u=t,c=a-t,g={"██":"█","█ ":"▀"," █":"▄","  ":" "},l={"██":"▀","█ ":"▀"," █":" ","  ":" "},h="";for(r=0;r<a;r+=2){for(n=Math.floor((r-u)/1),o=Math.floor((r+1-u)/1),e=0;e<a;e+=1)i="█",u<=e&&e<c&&u<=r&&r<c&&f.isDark(n,Math.floor((e-u)/1))&&(i=" "),u<=e&&e<c&&u<=r+1&&r+1<c&&f.isDark(o,Math.floor((e-u)/1))?i+=" ":i+="█",h+=t<1&&r+1>=c?l[i]:g[i];h+="\n"}return a%2&&t>0?h.substring(0,h.length-a-1)+Array(a+1).join("▀"):h.substring(0,h.length-1)}(r);t-=1,r=void 0===r?2*t:r;var e,n,o,i,a=f.getModuleCount()*t+2*r,u=r,c=a-r,g=Array(t+1).join("██"),l=Array(t+1).join("  "),h="",s="";for(e=0;e<a;e+=1){for(o=Math.floor((e-u)/t),s="",n=0;n<a;n+=1)i=1,u<=n&&n<c&&u<=e&&e<c&&f.isDark(o,Math.floor((n-u)/t))&&(i=0),s+=i?g:l;for(o=0;o<t;o+=1)h+=s+"\n"}return h.substring(0,h.length-1)},f.renderTo2dContext=function(t,r){r=r||2;for(var e=f.getModuleCount(),n=0;n<e;n++)for(var o=0;o<e;o++)t.fillStyle=f.isDark(n,o)?"black":"white",t.fillRect(n*r,o*r,r,r)},f};t.stringToBytes=(t.stringToBytesFuncs={default:function(t){for(var r=[],e=0;e<t.length;e+=1){var n=t.charCodeAt(e);r.push(255&n)}return r}}).default,t.createStringToBytes=function(t,r){var e=function(){for(var e=S(t),n=function(){var t=e.read();if(-1==t)throw"eof";return t},o=0,i={};;){var a=e.read();if(-1==a)break;var u=n(),f=n()<<8|n();i[String.fromCharCode(a<<8|u)]=f,o+=1}if(o!=r)throw o+" != "+r;return i}(),n="?".charCodeAt(0);return function(t){for(var r=[],o=0;o<t.length;o+=1){var i=t.charCodeAt(o);if(i<128)r.push(i);else{var a=e[t.charAt(o)];"number"==typeof a?(255&a)==a?r.push(a):(r.push(a>>>8),r.push(255&a)):r.push(n)}}return r}};var r,e,n,o,i,a=1,u=2,f=4,c=8,g={L:1,M:0,Q:3,H:2},l=0,h=1,s=2,v=3,d=4,w=5,p=6,y=7,B=(r=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],e=1335,n=7973,i=function(t){for(var r=0;0!=t;)r+=1,t>>>=1;return r},(o={}).getBCHTypeInfo=function(t){for(var r=t<<10;i(r)-i(e)>=0;)r^=e<<i(r)-i(e);return 21522^(t<<10|r)},o.getBCHTypeNumber=function(t){for(var r=t<<12;i(r)-i(n)>=0;)r^=n<<i(r)-i(n);return t<<12|r},o.getPatternPosition=function(t){return r[t-1]},o.getMaskFunction=function(t){switch(t){case l:return function(t,r){return(t+r)%2==0};case h:return function(t,r){return t%2==0};case s:return function(t,r){return r%3==0};case v:return function(t,r){return(t+r)%3==0};case d:return function(t,r){return(Math.floor(t/2)+Math.floor(r/3))%2==0};case w:return function(t,r){return t*r%2+t*r%3==0};case p:return function(t,r){return(t*r%2+t*r%3)%2==0};case y:return function(t,r){return(t*r%3+(t+r)%2)%2==0};default:throw"bad maskPattern:"+t}},o.getErrorCorrectPolynomial=function(t){for(var r=k([1],0),e=0;e<t;e+=1)r=r.multiply(k([1,C.gexp(e)],0));return r},o.getLengthInBits=function(t,r){if(1<=r&&r<10)switch(t){case a:return 10;case u:return 9;case f:case c:return 8;default:throw"mode:"+t}else if(r<27)switch(t){case a:return 12;case u:return 11;case f:return 16;case c:return 10;default:throw"mode:"+t}else{if(!(r<41))throw"type:"+r;switch(t){case a:return 14;case u:return 13;case f:return 16;case c:return 12;default:throw"mode:"+t}}},o.getLostPoint=function(t){for(var r=t.getModuleCount(),e=0,n=0;n<r;n+=1)for(var o=0;o<r;o+=1){for(var i=0,a=t.isDark(n,o),u=-1;u<=1;u+=1)if(!(n+u<0||r<=n+u))for(var f=-1;f<=1;f+=1)o+f<0||r<=o+f||0==u&&0==f||a==t.isDark(n+u,o+f)&&(i+=1);i>5&&(e+=3+i-5)}for(n=0;n<r-1;n+=1)for(o=0;o<r-1;o+=1){var c=0;t.isDark(n,o)&&(c+=1),t.isDark(n+1,o)&&(c+=1),t.isDark(n,o+1)&&(c+=1),t.isDark(n+1,o+1)&&(c+=1),0!=c&&4!=c||(e+=3)}for(n=0;n<r;n+=1)for(o=0;o<r-6;o+=1)t.isDark(n,o)&&!t.isDark(n,o+1)&&t.isDark(n,o+2)&&t.isDark(n,o+3)&&t.isDark(n,o+4)&&!t.isDark(n,o+5)&&t.isDark(n,o+6)&&(e+=40);for(o=0;o<r;o+=1)for(n=0;n<r-6;n+=1)t.isDark(n,o)&&!t.isDark(n+1,o)&&t.isDark(n+2,o)&&t.isDark(n+3,o)&&t.isDark(n+4,o)&&!t.isDark(n+5,o)&&t.isDark(n+6,o)&&(e+=40);var g=0;for(o=0;o<r;o+=1)for(n=0;n<r;n+=1)t.isDark(n,o)&&(g+=1);return e+=Math.abs(100*g/r/r-50)/5*10},o),C=function(){for(var t=new Array(256),r=new Array(256),e=0;e<8;e+=1)t[e]=1<<e;for(e=8;e<256;e+=1)t[e]=t[e-4]^t[e-5]^t[e-6]^t[e-8];for(e=0;e<255;e+=1)r[t[e]]=e;var n={glog:function(t){if(t<1)throw"glog("+t+")";return r[t]},gexp:function(r){for(;r<0;)r+=255;for(;r>=256;)r-=255;return t[r]}};return n}();function k(t,r){if(void 0===t.length)throw t.length+"/"+r;var e=function(){for(var e=0;e<t.length&&0==t[e];)e+=1;for(var n=new Array(t.length-e+r),o=0;o<t.length-e;o+=1)n[o]=t[o+e];return n}(),n={getAt:function(t){return e[t]},getLength:function(){return e.length},multiply:function(t){for(var r=new Array(n.getLength()+t.getLength()-1),e=0;e<n.getLength();e+=1)for(var o=0;o<t.getLength();o+=1)r[e+o]^=C.gexp(C.glog(n.getAt(e))+C.glog(t.getAt(o)));return k(r,0)},mod:function(t){if(n.getLength()-t.getLength()<0)return n;for(var r=C.glog(n.getAt(0))-C.glog(t.getAt(0)),e=new Array(n.getLength()),o=0;o<n.getLength();o+=1)e[o]=n.getAt(o);for(o=0;o<t.getLength();o+=1)e[o]^=C.gexp(C.glog(t.getAt(o))+r);return k(e,0).mod(t)}};return n}var A=function(){var t=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12,7,37,13],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],r=function(t,r){var e={};return e.totalCount=t,e.dataCount=r,e},e={};return e.getRSBlocks=function(e,n){var o=function(r,e){switch(e){case g.L:return t[4*(r-1)+0];case g.M:return t[4*(r-1)+1];case g.Q:return t[4*(r-1)+2];case g.H:return t[4*(r-1)+3];default:return}}(e,n);if(void 0===o)throw"bad rs block @ typeNumber:"+e+"/errorCorrectionLevel:"+n;for(var i=o.length/3,a=[],u=0;u<i;u+=1)for(var f=o[3*u+0],c=o[3*u+1],l=o[3*u+2],h=0;h<f;h+=1)a.push(r(c,l));return a},e}(),b=function(){var t=[],r=0,e={getBuffer:function(){return t},getAt:function(r){var e=Math.floor(r/8);return 1==(t[e]>>>7-r%8&1)},put:function(t,r){for(var n=0;n<r;n+=1)e.putBit(1==(t>>>r-n-1&1))},getLengthInBits:function(){return r},putBit:function(e){var n=Math.floor(r/8);t.length<=n&&t.push(0),e&&(t[n]|=128>>>r%8),r+=1}};return e},M=function(t){var r=a,e=t,n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=e,n=0;n+2<r.length;)t.put(o(r.substring(n,n+3)),10),n+=3;n<r.length&&(r.length-n==1?t.put(o(r.substring(n,n+1)),4):r.length-n==2&&t.put(o(r.substring(n,n+2)),7))}},o=function(t){for(var r=0,e=0;e<t.length;e+=1)r=10*r+i(t.charAt(e));return r},i=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);throw"illegal char :"+t};return n},x=function(t){var r=u,e=t,n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=e,n=0;n+1<r.length;)t.put(45*o(r.charAt(n))+o(r.charAt(n+1)),11),n+=2;n<r.length&&t.put(o(r.charAt(n)),6)}},o=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);if("A"<=t&&t<="Z")return t.charCodeAt(0)-"A".charCodeAt(0)+10;switch(t){case" ":return 36;case"$":return 37;case"%":return 38;case"*":return 39;case"+":return 40;case"-":return 41;case".":return 42;case"/":return 43;case":":return 44;default:throw"illegal char :"+t}};return n},m=function(r){var e=f,n=t.stringToBytes(r),o={getMode:function(){return e},getLength:function(t){return n.length},write:function(t){for(var r=0;r<n.length;r+=1)t.put(n[r],8)}};return o},L=function(r){var e=c,n=t.stringToBytesFuncs.SJIS;if(!n)throw"sjis not supported.";!function(){var t=n("友");if(2!=t.length||38726!=(t[0]<<8|t[1]))throw"sjis not supported."}();var o=n(r),i={getMode:function(){return e},getLength:function(t){return~~(o.length/2)},write:function(t){for(var r=o,e=0;e+1<r.length;){var n=(255&r[e])<<8|255&r[e+1];if(33088<=n&&n<=40956)n-=33088;else{if(!(57408<=n&&n<=60351))throw"illegal char at "+(e+1)+"/"+n;n-=49472}n=192*(n>>>8&255)+(255&n),t.put(n,13),e+=2}if(e<r.length)throw"illegal char at "+(e+1)}};return i},D=function(){var t=[],r={writeByte:function(r){t.push(255&r)},writeShort:function(t){r.writeByte(t),r.writeByte(t>>>8)},writeBytes:function(t,e,n){e=e||0,n=n||t.length;for(var o=0;o<n;o+=1)r.writeByte(t[o+e])},writeString:function(t){for(var e=0;e<t.length;e+=1)r.writeByte(t.charCodeAt(e))},toByteArray:function(){return t},toString:function(){var r="";r+="[";for(var e=0;e<t.length;e+=1)e>0&&(r+=","),r+=t[e];return r+="]"}};return r},S=function(t){var r=t,e=0,n=0,o=0,i={read:function(){for(;o<8;){if(e>=r.length){if(0==o)return-1;throw"unexpected end of file./"+o}var t=r.charAt(e);if(e+=1,"="==t)return o=0,-1;t.match(/^\s$/)||(n=n<<6|a(t.charCodeAt(0)),o+=6)}var i=n>>>o-8&255;return o-=8,i}},a=function(t){if(65<=t&&t<=90)return t-65;if(97<=t&&t<=122)return t-97+26;if(48<=t&&t<=57)return t-48+52;if(43==t)return 62;if(47==t)return 63;throw"c:"+t};return i},I=function(t,r,e){for(var n=function(t,r){var e=t,n=r,o=new Array(t*r),i={setPixel:function(t,r,n){o[r*e+t]=n},write:function(t){t.writeString("GIF87a"),t.writeShort(e),t.writeShort(n),t.writeByte(128),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(255),t.writeByte(255),t.writeByte(255),t.writeString(","),t.writeShort(0),t.writeShort(0),t.writeShort(e),t.writeShort(n),t.writeByte(0);var r=a(2);t.writeByte(2);for(var o=0;r.length-o>255;)t.writeByte(255),t.writeBytes(r,o,255),o+=255;t.writeByte(r.length-o),t.writeBytes(r,o,r.length-o),t.writeByte(0),t.writeString(";")}},a=function(t){for(var r=1<<t,e=1+(1<<t),n=t+1,i=u(),a=0;a<r;a+=1)i.add(String.fromCharCode(a));i.add(String.fromCharCode(r)),i.add(String.fromCharCode(e));var f,c,g,l=D(),h=(f=l,c=0,g=0,{write:function(t,r){if(t>>>r!=0)throw"length over";for(;c+r>=8;)f.writeByte(255&(t<<c|g)),r-=8-c,t>>>=8-c,g=0,c=0;g|=t<<c,c+=r},flush:function(){c>0&&f.writeByte(g)}});h.write(r,n);var s=0,v=String.fromCharCode(o[s]);for(s+=1;s<o.length;){var d=String.fromCharCode(o[s]);s+=1,i.contains(v+d)?v+=d:(h.write(i.indexOf(v),n),i.size()<4095&&(i.size()==1<<n&&(n+=1),i.add(v+d)),v=d)}return h.write(i.indexOf(v),n),h.write(e,n),h.flush(),l.toByteArray()},u=function(){var t={},r=0,e={add:function(n){if(e.contains(n))throw"dup key:"+n;t[n]=r,r+=1},size:function(){return r},indexOf:function(r){return t[r]},contains:function(r){return void 0!==t[r]}};return e};return i}(t,r),o=0;o<r;o+=1)for(var i=0;i<t;i+=1)n.setPixel(i,o,e(i,o));var a=D();n.write(a);for(var u=function(){var t=0,r=0,e=0,n="",o={},i=function(t){n+=String.fromCharCode(a(63&t))},a=function(t){if(t<0);else{if(t<26)return 65+t;if(t<52)return t-26+97;if(t<62)return t-52+48;if(62==t)return 43;if(63==t)return 47}throw"n:"+t};return o.writeByte=function(n){for(t=t<<8|255&n,r+=8,e+=1;r>=6;)i(t>>>r-6),r-=6},o.flush=function(){if(r>0&&(i(t<<6-r),t=0,r=0),e%3!=0)for(var o=3-e%3,a=0;a<o;a+=1)n+="="},o.toString=function(){return n},o}(),f=a.toByteArray(),c=0;c<f.length;c+=1)u.writeByte(f[c]);return u.flush(),"data:image/gif;base64,"+u};return t}();qrcode.stringToBytesFuncs["UTF-8"]=function(t){return function(t){for(var r=[],e=0;e<t.length;e++){var n=t.charCodeAt(e);n<128?r.push(n):n<2048?r.push(192|n>>6,128|63&n):n<55296||n>=57344?r.push(224|n>>12,128|n>>6&63,128|63&n):(e++,n=65536+((1023&n)<<10|1023&t.charCodeAt(e)),r.push(240|n>>18,128|n>>12&63,128|n>>6&63,128|63&n))}return r}(t)},function(t){"function"==typeof define&&define.amd?define([],t):"object"==typeof exports&&(module.exports=t())}(function(){return qrcode});
 </script>
 <script>
-    let customers = [];        // { id, name, jobName, whatsapp, total, paid, balance }
-    let editId = null;
-    let currentSearchTerm = "";
+const REMIND_DAYS=3;
+const ld=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}};
+let E=ld('dhass_ledger_entries',[]), M=ld('dhass_ledger_meta',{}), openK={};
+const $=id=>document.getElementById(id);
+const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const inr=n=>'₹'+(Math.round((+n||0)*100)/100).toLocaleString('en-IN');
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const fd=s=>s?s.split('-').reverse().join('/'):'-';
+const days=s=>Math.max(0,Math.floor((Date.now()-new Date(s+'T00:00:00'))/864e5));
+const mkKey=(n,m)=>{const d=String(m||'').replace(/\D/g,'').slice(-10);return d.length===10?d:'n:'+String(n).trim().toLowerCase()};
+function save(){localStorage.setItem('dhass_ledger_entries',JSON.stringify(E));localStorage.setItem('dhass_ledger_meta',JSON.stringify(M));schedPush()}
+let customers=[],LASTL=[];
+function showToast(m){toast(m)}
+function toast(t,ms){const e=$('toast');e.textContent=t;e.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display='none',ms||2500)}
 
-    // ---------- Utility functions ----------
-    function computeBalance(total, paid) {
-        let bal = total - paid;
-        return bal > 0 ? bal : 0;
+// வாடிக்கையாளர் வாரியாகக் குழுவாக்கி, பெற்ற தொகையை பழைய தேதியிலிருந்து கழிக்கும் (FIFO)
+function groups(){
+  const m={};
+  E.slice().sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:a.id-b.id).forEach(e=>{
+    const c=m[e.k]||(m[e.k]={k:e.k,name:e.name,mobile:e.mobile,rows:[],total:0,paid:0});
+    c.name=e.name||c.name;c.mobile=e.mobile||c.mobile;c.rows.push(Object.assign({},e));
+    if(e.t==='c')c.total+=e.amt;else c.paid+=e.amt;
+  });
+  return Object.values(m).map(c=>{
+    let left=c.paid;
+    c.rows.forEach(r=>{if(r.t==='c'){const u=Math.min(left,r.amt);r.got=u;r.rem=r.amt-u;left-=u}});
+    c.bal=Math.round((c.total-c.paid)*100)/100;
+    const o=c.rows.find(r=>r.t==='c'&&r.rem>0.001);c.oldest=o?o.date:null;
+    const mt=M[c.k]||{};c.n=mt.n||0;c.last=mt.last||0;c.bills=mt.b||0;c.lr=mt.lr||0;
+    c.needs=c.bal>0&&(!c.last||(Date.now()-c.last)/864e5>=REMIND_DAYS);
+    return c;
+  });
+}
+
+function render(){
+  const G=groups(); customers=G.map(toCust); const q=$('q').value.trim().toLowerCase(), f=$('f').value, t=today();
+  $('sBal').textContent=inr(G.reduce((s,c)=>s+Math.max(0,c.bal),0));
+  $('sDue').textContent=G.filter(c=>c.bal>0).length;
+  $('sRem').textContent=G.filter(c=>c.needs).length;
+  $('sTod').textContent='இன்று பெற்றது '+inr(E.filter(e=>e.t==='p'&&e.date===t).reduce((s,e)=>s+e.amt,0));$('sAll').textContent=G.length;$('sPaid').textContent=G.filter(c=>c.bal<=0&&c.total>0).length;
+  // தேர்வுப் பட்டியல்கள்
+  const cur=$('pCust').value;
+  $('pCust').innerHTML='<option value="">-- பாக்கி உள்ளவரைத் தேர்க --</option>'+G.filter(c=>c.bal>0).map(c=>'<option value="'+esc(encodeURIComponent(c.k))+'">'+esc(c.name)+' ('+esc(c.mobile||'')+') - '+inr(c.bal)+'</option>').join('');
+  $('pCust').value=cur;showBal();
+  $('custList').innerHTML=G.map(c=>'<option value="'+esc(c.name)+'">'+esc(c.mobile||'')+'</option>').join('');
+  let L=G.filter(c=>(f==='all')||(f==='due'&&c.bal>0)||(f==='rem'&&c.needs)||(f==='clear'&&c.bal<=0));
+  if(q)L=L.filter(c=>(c.name+' '+(c.mobile||'')).toLowerCase().includes(q));
+  L.sort((a,b)=>b.bal-a.bal);LASTL=L;
+  if(!L.length){$('body').innerHTML='<tr><td colspan="8" style="text-align:center">பதிவுகள் எதுவுமில்லை</td></tr>';return}
+  $('body').innerHTML=L.map((c,i)=>{
+    const k=esc(encodeURIComponent(c.k));
+    let h='<tr><td>'+(i+1)+'</td><td><b>'+esc(c.name)+'</b><br><small>'+esc(c.mobile||'')+'</small></td>'+
+      '<td>'+(c.oldest?fd(c.oldest)+'<br><span class="badge no">'+days(c.oldest)+' நாள்</span>':'—')+'</td>'+
+      '<td>'+inr(c.total)+'</td><td>'+inr(c.paid)+'</td><td class="bal">'+inr(c.bal)+'</td>'+
+      '<td>'+((c.bills||c.n)?'📤 '+c.bills+' | 🔔 '+c.n+(c.last?'<br><small>கடைசி: '+fd(new Date(c.last).toISOString().slice(0,10))+' ('+daysSince(c.last)+' நாள்)</small>':''):'இல்லை')+'</td>'+
+      '<td><button class="tb t-w" onclick="waBill(\''+k+'\')">📱 WhatsApp</button><button class="tb t-i" onclick="imgBill(\''+k+'\')">🖼️ படம்</button>'+
+      (c.bal>0?'<button class="tb t-p" onclick="payFor(\''+k+'\')">💵 பெற்றது</button><button class="tb t-r" onclick="remBill(\''+k+'\')">🔔 நினைவூட்டு ('+c.n+')</button>':'')+
+      '<button class="tb t-d" onclick="tog(\''+k+'\')">'+(openK[c.k]?'▲':'▼')+' விவரம்</button><button class="tb t-n" onclick="prn(\''+k+'\')">🖨️</button><button class="tb t-e" onclick="editCust(\''+k+'\')">✏️</button><button class="tb t-x" onclick="delCust(\''+k+'\')">🗑️</button>'+
+      ((c.bills||c.n)?'<button class="tb t-d" onclick="resetR(\''+k+'\')">↺ 0</button>':'')+'</td></tr>';
+    if(openK[c.k]){
+      h+='<tr class="det"><td></td><td colspan="7"><table><thead><tr><th>தேதி</th><th>விவரம்</th><th>தொகை</th><th>நிலை</th><th></th></tr></thead><tbody>'+
+      c.rows.map(r=>{
+        const st=r.t==='p'?'<span class="badge ok">💵 பெறப்பட்டது</span>':(r.rem<=0.001?'<span class="badge ok">✔ முடிந்தது</span>':(r.got>0?'<span class="badge part">பகுதி — மீதம் '+inr(r.rem)+'</span>':'<span class="badge no">நிலுவை</span>'));
+        return '<tr><td>'+fd(r.date)+'</td><td>'+esc(r.desc||'')+'</td><td>'+(r.t==='p'?'− ':'')+inr(r.amt)+'</td><td>'+st+'</td><td><button class="tb t-d" onclick="editEntry('+r.id+')">✏️</button><button class="tb t-x" onclick="del('+r.id+')">🗑️</button></td></tr>';
+      }).join('')+'</tbody></table></td></tr>';
     }
+    return h;
+  }).join('');
+}
 
-    /* ---------- Cloud Sync (Google Apps Script + Google Sheets) ---------- */
-    const STORAGE_KEY = 'customer_job_balance_app_v2';
-    const GAS_URL_KEY = 'dhassBalanceGasSyncUrl';
-    const SYNC_META_KEY = '__syncMeta_' + STORAGE_KEY;
-    const DEFAULT_GAS_URL = 'https://script.google.com/macros/s/AKfycbyjDr2zZax0bBBl53NCxu8gfdE66Z-U--DFGsg6tAdvjhRWAP9fWRzuU2e-LruLf4lEDA/exec';
-    let gasUrl = localStorage.getItem(GAS_URL_KEY) || DEFAULT_GAS_URL;
-    let syncPushTimer = null;
+function setF(v){$('f').value=v;$('q').value='';render()}
+function tog(k){k=decodeURIComponent(k);openK[k]=!openK[k];render()}
 
-    function setSyncStatus(text) {
-        const el = document.getElementById('syncStatus');
-        if (el) el.textContent = text;
-    }
+// ---- பாக்கி சேர் ----
+function addRow(s,a){
+  const d=document.createElement('div');d.className='item';
+  d.innerHTML='<input class="is" placeholder="சேவை / வேலை (எ.கா: பான் திருத்தம்)" value="'+esc(s||'')+'"><input class="ia" type="number" min="0" step="any" placeholder="₹ தொகை" value="'+esc(a||'')+'"><button class="x" title="நீக்கு">✕</button>';
+  d.querySelector('.x').onclick=()=>{if($('items').children.length>1)d.remove();else{d.querySelector('.is').value='';d.querySelector('.ia').value=''}};
+  $('items').appendChild(d);
+}
+function fillMob(){
+  const n=$('aName').value.trim().toLowerCase(), c=groups().find(c=>c.name.toLowerCase()===n);
+  if(c&&c.mobile&&!$('aMob').value)$('aMob').value=c.mobile;
+}
+function addCharge(){
+  const name=$('aName').value.trim(), date=$('aDate').value||today();
+  let mob=$('aMob').value.trim();
+  if(!mob){const ex=groups().find(c=>c.mobile&&c.name.toLowerCase()===name.toLowerCase());if(ex)mob=ex.mobile}
+  const items=[...document.querySelectorAll('#items .item')].map(r=>({s:r.querySelector('.is').value.trim(),a:parseFloat(r.querySelector('.ia').value)||0})).filter(x=>x.a>0);
+  if(!name||!items.length){alert('பெயர் மற்றும் குறைந்தது ஒரு வேலையின் தொகையை உள்ளிடவும்!');return}
+  const k=mkKey(name,mob), now=Date.now();
+  items.forEach((x,i)=>E.push({id:now+i,k,name,mobile:mob,date,t:'c',desc:x.s||'சேவைக் கட்டணம்',amt:x.a}));
+  save();$('aName').value='';$('aMob').value='';$('items').innerHTML='';addRow();$('aDate').value=today();
+  render();toast('✔ பாக்கியில் சேர்க்கப்பட்டது');
+}
 
-    async function pullFromCloud(showStatus) {
-        if (!gasUrl) return false;
-        if (showStatus) setSyncStatus('🔄 சின்க் செய்யப்படுகிறது...');
-        try {
-            const res = await fetch(gasUrl + '?action=getAll');
-            const remote = await res.json();
-            const r = remote[STORAGE_KEY];
-            let updated = false;
-            if (r && r.value !== undefined && r.value !== null) {
-                const localTs = parseInt(localStorage.getItem(SYNC_META_KEY) || '0', 10);
-                if (r.updatedAt && r.updatedAt > localTs) {
-                    localStorage.setItem(STORAGE_KEY, r.value);
-                    localStorage.setItem(SYNC_META_KEY, String(r.updatedAt));
-                    updated = true;
-                }
-            }
-            setSyncStatus('✅ சின்க் ஆனது (' + new Date().toLocaleTimeString('ta-IN') + ')');
-            return updated;
-        } catch (err) {
-            setSyncStatus('⚠️ சின்க் பிழை - இணையம் சரிபார்க்கவும்');
-            console.error('Sync pull error', err);
-            return false;
-        }
-    }
+// ---- தொகை பெற்றது ----
+function curG(){const k=$('pCust').value;return k?groups().find(c=>c.k===decodeURIComponent(k)):null}
+function showBal(){const c=curG();$('pBal').textContent=c?'மீதம் பாக்கி: '+inr(c.bal):''}
+function fullAmt(){const c=curG();if(c)$('pAmt').value=c.bal}
+function payFor(k){$('pCust').value=k;showBal();$('pAmt').focus();$('pAmt').scrollIntoView({behavior:'smooth',block:'center'})}
+function receive(){
+  const c=curG(), amt=parseFloat($('pAmt').value)||0;
+  if(!c||amt<=0){alert('வாடிக்கையாளரைத் தேர்ந்து, பெற்ற தொகையை உள்ளிடவும்!');return}
+  if(amt>c.bal+0.001){alert('பெற்ற தொகை மீதம் உள்ள பாக்கியை ('+inr(c.bal)+') விட அதிகமாக உள்ளது!');return}
+  const note=$('pNote').value.trim();
+  E.push({id:Date.now(),k:c.k,name:c.name,mobile:c.mobile,date:$('pDate').value||today(),t:'p',desc:$('pMode').value+(note?' - '+note:''),amt});
+  save();$('pAmt').value='';$('pNote').value='';$('pCust').value='';
+  render();toast('✔ '+inr(amt)+' கழிக்கப்பட்டது');
+}
+function del(id){
+  if(!confirm('இந்தப் பதிவை நிரந்தரமாக நீக்கவா?'))return;
+  E=E.filter(e=>e.id!==id);save();render();toast('🗑️ நீக்கப்பட்டது');
+}
 
-    function pushToCloud() {
-        if (!gasUrl) return;
-        const value = localStorage.getItem(STORAGE_KEY);
-        if (value === null) return;
-        const updatedAt = Date.now();
-        localStorage.setItem(SYNC_META_KEY, String(updatedAt));
-        setSyncStatus('🔄 சின்க் செய்யப்படுகிறது...');
-        fetch(gasUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify({ key: STORAGE_KEY, value: value, updatedAt: updatedAt })
-        }).then(function () {
-            setSyncStatus('✅ சின்க் ஆனது (' + new Date().toLocaleTimeString('ta-IN') + ')');
-        }).catch(function (err) {
-            setSyncStatus('⚠️ சின்க் பிழை - இணையம் சரிபார்க்கவும்');
-            console.error('Sync push error', err);
-        });
-    }
+// ---- காப்புப் பிரதி ----
 
-    function schedulePush() {
-        if (!gasUrl) return;
-        clearTimeout(syncPushTimer);
-        syncPushTimer = setTimeout(pushToCloud, 900);
-    }
 
-    function promptGasUrl() {
-        const val = prompt('Google Apps Script Web App URL-ஐ ஒட்டவும்:\n(Apps Script-ஐ Deploy செய்த பிறகு கிடைக்கும் URL)', gasUrl || '');
-        if (val === null) return;
-        gasUrl = val.trim();
-        localStorage.setItem(GAS_URL_KEY, gasUrl);
-        if (gasUrl) {
-            setSyncStatus('⏳ முதல் சின்க் செய்யப்படுகிறது...');
-            pullFromCloud(true).then(function (updated) {
-                if (updated) location.reload(); else schedulePush();
-            });
-        } else {
-            setSyncStatus('☁️ Sync அமைக்கப்படவில்லை');
-        }
-    }
-
-    function manualSync() {
-        if (!gasUrl) { promptGasUrl(); return; }
-        pullFromCloud(true).then(function (updated) { if (updated) location.reload(); });
-    }
-
-    if (gasUrl) setSyncStatus('☁️ Sync தயார்');
-    setInterval(function () {
-        if (gasUrl) pullFromCloud(false).then(function (updated) { if (updated) location.reload(); });
-    }, 20000);
-    /* ---------- End Cloud Sync ---------- */
-
-    function showToast(msg, isError = false) {
-        let toast = document.createElement("div");
-        toast.className = "toast-msg";
-        toast.innerText = msg;
-        toast.style.background = isError ? "#b91c1c" : "#2d6a4f";
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 2800);
-    }
-
-    function saveToLocal() {
-        localStorage.setItem("customer_job_balance_app_v2", JSON.stringify(customers));
-        schedulePush();
-    }
-
-    function loadFromLocal() {
-        const stored = localStorage.getItem("customer_job_balance_app_v2");
-        if(stored) {
-            customers = JSON.parse(stored);
-        } else {
-            // demo data with proper fields
-            customers = [
-                { id: Date.now()+101, name: "டேரில்", jobName: "Vi Recharge", whatsapp: "9876543211", total: 349, paid: 0, balance: 349 },
-                { id: Date.now()+102, name: "ரமேஷ்", jobName: "வீட்டு பெயிண்டிங்", whatsapp: "9876543210", total: 25000, paid: 15000, balance: 10000 },
-                { id: Date.now()+103, name: "பிரியா", jobName: "மின் வயரிங்", whatsapp: "9988776655", total: 48000, paid: 24000, balance: 24000 }
-            ];
-            saveToLocal();
-        }
-        renderFiltered();
-    }
-
-    // ---- duplicate logic: same name AND same jobName OR same whatsapp? as per requirement - same name or cell number -> update existing
-    // Enhanced: If customer name (case-insensitive) OR whatsapp number (non-empty) matches any existing, we treat as duplicate and update that record.
-    // Business rule: "ஒரே பெயர் அல்லது செல் நம்பர் வந்தால் அந்த பெயரில் அப்டேட் ஆகும்"
-    function findDuplicateEntry(name, whatsapp, excludeId = null) {
-        return customers.find(c => {
-            if(excludeId !== null && c.id === excludeId) return false;
-            const nameMatch = name && c.name.toLowerCase() === name.toLowerCase();
-            const whatsappMatch = whatsapp && c.whatsapp && whatsapp && c.whatsapp === whatsapp;
-            return nameMatch || whatsappMatch;
-        });
-    }
-
-    // Add or Update with duplicate merge logic
-    function addOrUpdateRecord() {
-        let name = document.getElementById("custName").value.trim();
-        let jobName = document.getElementById("jobName").value.trim();
-        let whatsapp = document.getElementById("whatsappNo").value.trim();
-        let total = parseFloat(document.getElementById("totalAmount").value) || 0;
-        let paid = parseFloat(document.getElementById("paidAmount").value) || 0;
-
-        if(!name) { alert("வாடிக்கையாளர் பெயர் கட்டாயம்"); return; }
-        if(!jobName) { alert("வேலையின் பெயர் கட்டாயம்"); return; }
-        if(total < 0) total = 0;
-        if(paid < 0) paid = 0;
-        if(whatsapp && !/^\d{10}$/.test(whatsapp)) {
-            if(!confirm("வாட்ஸ்அப் எண் 10 இலக்கமாக இருக்க வேண்டும். இருந்தாலும் சேர்க்கலாமா?")) return;
-        }
-        const balance = computeBalance(total, paid);
-
-        // EDIT MODE (manual edit via edit button)
-        if(editId !== null) {
-            const index = customers.findIndex(c => c.id === editId);
-            if(index !== -1) {
-                customers[index] = { ...customers[index], name, jobName, whatsapp, total, paid, balance };
-                showToast(`✅ ${name} - பதிவு மேம்படுத்தப்பட்டது`);
-            }
-            cancelEditUI();
-            saveToLocal();
-            renderFiltered();
-            return;
-        }
-
-        // ---------- DUPLICATE HANDLING: If same name or same whatsapp exists (active) ----------
-        const duplicate = findDuplicateEntry(name, whatsapp);
-        if(duplicate) {
-            if(confirm(`⚠️ "${duplicate.name}" (${duplicate.jobName}) ஏற்கனவே உள்ளது. இந்தப் பதிவை புதுப்பிக்க வேண்டுமா? (மொத்தத் தொகை, செலுத்தியது மாற்றப்படும்)`)) {
-                // update duplicate record with new values (Merge: update total, paid, jobName, whatsapp optionally)
-                duplicate.name = name;
-                duplicate.jobName = jobName;
-                duplicate.whatsapp = whatsapp || duplicate.whatsapp;
-                duplicate.total = total;
-                duplicate.paid = paid;
-                duplicate.balance = balance;
-                saveToLocal();
-                renderFiltered();
-                clearFormFields();
-                showToast(`🔄 பழைய பதிவு புதுப்பிக்கப்பட்டது: ${name} - பாக்கி ₹${balance}`);
-                return;
-            } else {
-                return; // user cancelled
-            }
-        }
-
-        // brand new record
-        const newId = Date.now();
-        customers.push({ id: newId, name, jobName, whatsapp, total, paid, balance });
-        saveToLocal();
-        renderFiltered();
-        clearFormFields();
-        showToast(`✨ புதிய வேலை சேர்க்கப்பட்டது: ${name} - ${jobName}`);
-    }
-
-    function clearFormFields() {
-        document.getElementById("custName").value = "";
-        document.getElementById("jobName").value = "";
-        document.getElementById("whatsappNo").value = "";
-        document.getElementById("totalAmount").value = "";
-        document.getElementById("paidAmount").value = "";
-    }
-
-    function cancelEditUI() {
-        editId = null;
-        clearFormFields();
-        document.getElementById("addBtn").style.display = "inline-flex";
-        document.getElementById("updateBtn").style.display = "none";
-        document.getElementById("cancelEditBtn").style.display = "none";
-    }
-
-    function editCustomer(id) {
-        const cust = customers.find(c => c.id === id);
-        if(!cust) return;
-        editId = cust.id;
-        document.getElementById("custName").value = cust.name;
-        document.getElementById("jobName").value = cust.jobName;
-        document.getElementById("whatsappNo").value = cust.whatsapp || "";
-        document.getElementById("totalAmount").value = cust.total;
-        document.getElementById("paidAmount").value = cust.paid;
-        document.getElementById("addBtn").style.display = "none";
-        document.getElementById("updateBtn").style.display = "inline-flex";
-        document.getElementById("cancelEditBtn").style.display = "inline-flex";
-        document.querySelector(".card").scrollIntoView({ behavior: "smooth" });
-    }
-
-    function deleteCustomer(id) {
-        if(confirm("இந்தப் பதிவை நிரந்தரமாக நீக்கவும்?")) {
-            customers = customers.filter(c => c.id !== id);
-            if(editId === id) cancelEditUI();
-            saveToLocal();
-            renderFiltered();
-            showToast("🗑️ நீக்கப்பட்டது");
-        }
-    }
-
-    // ================= பில் படம் (QR உடன்) + WhatsApp =================
+/* ================= பழைய கருவியின் வசதிகள் (QR, பில் படம், WhatsApp, அச்சு, Sync...) ================= */
     const UPI_ID = "9843232324@ybl";
     const SHOP_NAME = "தாஸ் பொது சேவை மையம்";
 
@@ -1085,385 +606,121 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
     }
 
     // ----- Export / Import features -----
-    function exportJSON() {
-        const dataStr = JSON.stringify(customers, null, 2);
-        const blob = new Blob([dataStr], {type: "application/json"});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `thas_csc_customers_${new Date().toISOString().slice(0,19)}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-        showToast("📁 JSON எக்ஸ்போர்ட் முடிந்தது");
-    }
-
-    function exportCSV() {
-        let csvRows = [["ID","பெயர்","வேலைப்பெயர்","வாட்ஸ்அப்","மொத்தம்","செலுத்தியது","பாக்கி","பில் அனுப்பியது","நினைவூட்டல் எண்ணிக்கை","கடைசி அனுப்பிய நாள்"]];
-        for(let c of customers) {
-            csvRows.push([c.id, c.name, c.jobName, c.whatsapp || "", c.total, c.paid, c.balance, c.billSent || 0, c.remindCount || 0, c.lastSentAt ? fmtDate(c.lastSentAt) : ""]);
-        }
-        const csvContent = csvRows.map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(",")).join("\n");
-        const blob = new Blob(["\uFEFF" + csvContent], {type: "text/csv;charset=utf-8;"});
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = `customers_list_${Date.now()}.csv`;
-        a.click();
-        URL.revokeObjectURL(a.href);
-        showToast("📊 CSV எக்ஸ்போர்ட் வெற்றி");
-    }
-
-    function importJSON(file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            try {
-                const imported = JSON.parse(e.target.result);
-                if(Array.isArray(imported)) {
-                    const validRecords = imported.filter(rec => rec.name && rec.jobName !== undefined).map(rec => ({
-                        id: rec.id && !customers.some(c => c.id === rec.id) ? rec.id : Date.now() + Math.random(),
-                        name: rec.name,
-                        jobName: rec.jobName || "பொது வேலை",
-                        whatsapp: rec.whatsapp || "",
-                        total: Number(rec.total) || 0,
-                        paid: Number(rec.paid) || 0,
-                        balance: computeBalance(Number(rec.total) || 0, Number(rec.paid) || 0),
-                        billSent: Number(rec.billSent) || 0,
-                        remindCount: Number(rec.remindCount) || 0,
-                        lastSentAt: Number(rec.lastSentAt) || 0,
-                        lastRemindAt: Number(rec.lastRemindAt) || 0
-                    }));
-                    customers.push(...validRecords);
-                    saveToLocal();
-                    renderFiltered();
-                    showToast(`📂 இறக்குமதி முடிந்தது! ${validRecords.length} பதிவுகள் சேர்க்கப்பட்டன`);
-                } else throw new Error("Invalid format");
-            } catch(err) {
-                showToast("❌ தவறான JSON கோப்பு", true);
-            }
-        };
-        reader.readAsText(file);
-    }
-
-    // Sample data with new job patterns + includes UPI note
-    function loadSampleData() {
-        const samples = [
-            { name: "கௌதம்", jobName: "Aadhaar புதுப்பித்தல்", whatsapp: "9876500001", total: 150, paid: 0, balance: 150 },
-            { name: "மீனா", jobName: "PAN கார்டு", whatsapp: "9876500002", total: 299, paid: 100, balance: 199 },
-            { name: "செல்வி", jobName: "Vi Recharge", whatsapp: "9843232311", total: 349, paid: 0, balance: 349 }
-        ];
-        for(let s of samples) {
-            const exists = customers.some(c => c.name.toLowerCase() === s.name.toLowerCase() || (s.whatsapp && c.whatsapp === s.whatsapp));
-            if(!exists) customers.push({ id: Date.now() + Math.random()*1000, ...s, balance: computeBalance(s.total, s.paid) });
-        }
-        saveToLocal();
-        renderFiltered();
-        showToast("✨ மாதிரி தரவு சேர்க்கப்பட்டது (நகல் தவிர்க்கப்பட்டது)");
-    }
-
-    // ----- Rendering & Filter -----
-    let currentFilter = "all";           // all | due | paid | remind
-    const REMIND_AFTER_DAYS = 3;         // கடைசியாக அனுப்பி இத்தனை நாள் ஆனால் நினைவூட்ட வேண்டும்
-    const FILTER_LABELS = { due: "⏳ செலுத்த வேண்டியவர்கள்", paid: "✅ செலுத்தியவர்கள்", remind: "🔔 நினைவூட்ட வேண்டியவர்கள்" };
-
-    function needsReminder(c) {
-        return c.balance > 0 && (!c.lastSentAt || daysSince(c.lastSentAt) >= REMIND_AFTER_DAYS);
-    }
-    function matchesFilter(c) {
-        if (currentFilter === "due") return c.balance > 0;
-        if (currentFilter === "paid") return c.balance <= 0;
-        if (currentFilter === "remind") return needsReminder(c);
-        return true;
-    }
-
-    function updateDashboard() {
-        const due = customers.filter(c => c.balance > 0);
-        const paid = customers.filter(c => c.balance <= 0);
-        const remind = customers.filter(needsReminder);
-        const totalBal = due.reduce((t, c) => t + c.balance, 0);
-        const collected = customers.reduce((t, c) => t + (c.paid || 0), 0);
-        const neverSent = remind.filter(c => !c.lastSentAt).length;
-        document.getElementById("dAll").innerText = customers.length;
-        document.getElementById("dBal").innerText = "₹" + totalBal.toLocaleString("en-IN", { maximumFractionDigits: 2 });
-        document.getElementById("dBalSub").innerText = due.length + " பேரிடம் வசூலிக்க";
-        document.getElementById("dDue").innerText = due.length;
-        document.getElementById("dPaid").innerText = paid.length;
-        document.getElementById("dPaidSub").innerText = "வசூலானது ₹" + collected.toLocaleString("en-IN", { maximumFractionDigits: 2 });
-        document.getElementById("dRemind").innerText = remind.length;
-        document.getElementById("dRemindSub").innerText = remind.length ? (neverSent ? neverSent + " பேருக்கு இன்னும் பில் அனுப்பவில்லை" : REMIND_AFTER_DAYS + "+ நாள் ஆனவர்கள்") : "யாரும் இல்லை 👍";
-        document.querySelectorAll("#dashboard .dash-card").forEach(el => {
-            const f = el.dataset.filter;
-            el.classList.toggle("active", f === currentFilter && !(f === "all" && currentFilter === "all"));
-        });
-        const chip = document.getElementById("filterChip");
-        if (currentFilter === "all") chip.style.display = "none";
-        else { chip.style.display = "inline-block"; chip.innerText = FILTER_LABELS[currentFilter] + " மட்டும் • மீண்டும் கிளிக் செய்தால் அனைத்தும்"; }
-    }
-
-    function setFilter(f) {
-        currentFilter = (f === currentFilter) ? "all" : f;
-        renderFiltered();
-    }
-
-    function renderFiltered() {
-        let term = currentSearchTerm.toLowerCase();
-        let filtered = customers.filter(c =>
-            matchesFilter(c) && (
-            c.name.toLowerCase().includes(term) ||
-            (c.jobName && c.jobName.toLowerCase().includes(term)) ||
-            (c.whatsapp && c.whatsapp.includes(term)))
-        );
-        // புதிய பதிவுகள் மேலே (id = உருவாக்கிய நேரம்)
-        filtered.sort((x, y) => (Number(y.id) || 0) - (Number(x.id) || 0));
-        renderTableWithData(filtered);
-        updateFooter(filtered);
-        updateDashboard();
-    }
-    function updateFooter(data) {
-        const totalJobs = data.length;
-        const totalBalance = data.reduce((sum, c) => sum + (c.balance > 0 ? c.balance : 0), 0);
-        document.getElementById("statsFooter").innerHTML = `📋 மொத்த வேலைகள்: ${totalJobs} | 💰 மொத்த பாக்கி: ₹${totalBalance.toFixed(2)} | 🧾 UPI: 9843232324@ybl`;
-    }
-
     function escapeHtml(str) { if(!str) return ""; return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
-
-    function renderTableWithData(dataArray) {
-        const tbody = document.getElementById("tableBody");
-        if(!dataArray.length) {
-            tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">📭 பதிவுகள் இல்லை, மேலே சேர்க்கவும்.</td></tr>';
-            return;
-        }
-        tbody.innerHTML = "";
-        dataArray.forEach((cust, idx) => {
-            const row = tbody.insertRow();
-            row.insertCell(0).innerText = idx+1;
-            row.insertCell(1).innerHTML = `<strong>${escapeHtml(cust.name)}</strong>`;
-            const jobCell = row.insertCell(2);
-            jobCell.innerHTML = `<span style="background:#f3e8ff; padding:4px 12px; border-radius:25px;">${escapeHtml(cust.jobName)}</span>`;
-            row.insertCell(3).innerText = cust.whatsapp || "❌ இல்லை";
-            row.insertCell(4).innerText = `₹${cust.total.toFixed(2)}`;
-            row.insertCell(5).innerText = `₹${cust.paid.toFixed(2)}`;
-            const balCell = row.insertCell(6);
-            balCell.innerText = `₹${cust.balance.toFixed(2)}`;
-            if(cust.balance > 0) balCell.className = "balance-due";
-            if (cust.billSent || cust.remindCount) {
-                const st = document.createElement("div");
-                st.style.cssText = "font-size:0.72rem;font-weight:normal;color:#475569;margin-top:4px;line-height:1.4;";
-                let t = `📤 பில்: ${cust.billSent || 0} | 🔔 நினைவூட்டல்: ${cust.remindCount || 0}`;
-                if (cust.lastSentAt) t += `<br>கடைசி: ${fmtDate(cust.lastSentAt)} (${daysSince(cust.lastSentAt)} நாள் முன்)`;
-                st.innerHTML = t;
-                if (cust.balance > 0 && cust.lastSentAt && daysSince(cust.lastSentAt) >= 3) st.style.color = "#b91c1c";
-                balCell.appendChild(st);
-            }
-            const action = row.insertCell(7);
-            action.className = "actions-cell";
-            const wa = mkBtn("📱 WhatsApp", "whatsapp", () => sendWhatsApp(cust.id));
-            const pr = mkBtn("🖨️ Print", "print", () => printSingle(cust.id));
-            const ed = mkBtn("✏️ Edit", "edit", () => editCustomer(cust.id));
-            const del = mkBtn("🗑️ Delete", "delete", () => deleteCustomer(cust.id));
-            action.append(wa);
-            action.append(mkBtn("🖼️ படம்", "img", () => copyBillImage(cust.id)));
-            if (cust.balance > 0) {
-                const rm = mkBtn(`🔔 நினைவூட்டு (${cust.remindCount || 0})`, "remind", () => sendReminder(cust.id));
-                action.append(rm);
-            }
-            action.append(pr, ed, del);
-            if (cust.billSent || cust.remindCount) action.append(mkBtn("↺ எண்ணிக்கை 0", "edit", () => resetReminders(cust.id)));
-        });
-    }
-
-    function mkBtn(text, typeClass, onclickFn) {
-        const btn = document.createElement("button");
-        btn.innerText = text;
-        btn.className = `icon-btn ${typeClass}`;
-        btn.onclick = onclickFn;
-        return btn;
-    }
-
-    // ----- Event binding -----
-    document.getElementById("addBtn").addEventListener("click", addOrUpdateRecord);
-    document.getElementById("updateBtn").addEventListener("click", addOrUpdateRecord);
-    document.getElementById("cancelEditBtn").addEventListener("click", cancelEditUI);
-    document.getElementById("searchInput").addEventListener("input", (e) => { currentSearchTerm = e.target.value; renderFiltered(); });
-    document.getElementById("clearSearchBtn").addEventListener("click", () => { document.getElementById("searchInput").value = ""; currentSearchTerm = ""; renderFiltered(); });
-    document.getElementById("globalPrintBtn").addEventListener("click", printFullList);
-    document.getElementById("customQrInput").addEventListener("change", (e) => { setCustomQr(e.target.files[0]); e.target.value = ""; });
-    loadCustomQr();
-    (function () {
-        const q = document.getElementById("qrAmountToggle");
-        q.checked = localStorage.getItem("qr_amount") !== "0";
-        q.addEventListener("change", () => { localStorage.setItem("qr_amount", q.checked ? "1" : "0"); showToast(q.checked ? "💰 QR-இல் தொகை: ON" : "💰 QR-இல் தொகை: OFF (தொகை இல்லாத QR)"); });
-    })();
-    (function () {
-        const t = document.getElementById("waDirectToggle");
-        t.checked = localStorage.getItem("wa_direct") !== "0";
-        t.addEventListener("change", () => { localStorage.setItem("wa_direct", t.checked ? "1" : "0"); showToast(t.checked ? "📲 நேரடி WhatsApp: ON" : "📤 படத்துடன் பகிர்வு முறை: ON"); });
-    })();
-    document.querySelectorAll("#dashboard .dash-card").forEach(el => el.addEventListener("click", () => {
-        setFilter(el.dataset.filter);
-        const t = document.getElementById("customerTable");
-        if (t) t.scrollIntoView({ behavior: "smooth", block: "start" });
-    }));
-    document.getElementById("exportDataBtn").addEventListener("click", exportJSON);
-    document.getElementById("exportCSVBtn").addEventListener("click", exportCSV);
-    document.getElementById("sampleDataBtn").addEventListener("click", loadSampleData);
-    document.getElementById("importFileInput").addEventListener("change", (e) => { if(e.target.files.length) importJSON(e.target.files[0]); e.target.value = ''; });
-
-    if (gasUrl) {
-        pullFromCloud(true).then(function () { loadFromLocal(); });
-    } else {
-        loadFromLocal();
-    }
-</script>
-<script>
-function switchMainTab(t){
-  document.getElementById('tab-balance').style.display=t==='bal'?'':'none';
-  document.getElementById('tab-ledger').style.display=t==='lg'?'':'none';
-  document.getElementById('mtBal').classList.toggle('on',t==='bal');
-  document.getElementById('mtLg').classList.toggle('on',t==='lg');
+const dec = decodeURIComponent, OLD_KEY = 'customer_job_balance_app_v2';
+function toCust(c){
+  const pend=c.rows.filter(r=>r.t==='c'&&r.rem>0.001).map(r=>({date:r.date,desc:r.desc,rem:r.rem}));
+  const last=c.rows.filter(r=>r.t==='c').slice(-1)[0];
+  const jn=pend.length?(pend.length>1?pend[0].desc+' +'+(pend.length-1)+' வேலைகள்':pend[0].desc):(last?last.desc:'-');
+  return {id:c.k,name:c.name,jobName:jn,whatsapp:c.mobile||'',total:c.total,paid:c.paid,balance:Math.max(0,c.bal),billSent:c.bills,remindCount:c.n,lastSentAt:c.last,lastRemindAt:c.lr,pend:pend};
 }
-(function(){
+const dl=c=>(c.pend||[]).map(r=>'• '+fmtDate(new Date(r.date+'T00:00:00').getTime())+' - '+r.desc+' - ₹'+r.rem.toFixed(2)).join('\n');
+function buildWaMessage(cust){
+  return `🏷️ *தாஸ் பொது சேவை மையம்* 🧾\n\n👤 வாடிக்கையாளர்: ${cust.name}\n`+(dl(cust)?`📋 நிலுவை விவரம்:\n${dl(cust)}\n`:`📋 வேலை: ${cust.jobName}\n`)+`💰 மொத்தத் தொகை: ₹${cust.total.toFixed(2)}\n✅ செலுத்தியது: ₹${cust.paid.toFixed(2)}\n⚠️ மீதி பாக்கி: ₹${cust.balance.toFixed(2)}\n\n🔹 தங்கள் பாக்கி தொகையை செலுத்தி உதவுமாறு வேண்டுகிறோம்.\n💳 UPI ID: ${UPI_ID}\n🙏 நன்றி! - தாஸ் பணி மேலாண்மை`;
+}
+function buildReminderMessage(cust,no){
+  const prev=cust.lastSentAt?`\n📅 முன்பு பில் அனுப்பிய நாள்: ${fmtDate(cust.lastSentAt)} (${daysSince(cust.lastSentAt)} நாட்கள் ஆகிறது)`:'';
+  return `🔔 *பாக்கி நினைவூட்டல் - ${no}* 🔔\n🏷️ *தாஸ் பொது சேவை மையம்*\n\n👤 வாடிக்கையாளர்: ${cust.name}\n`+(dl(cust)?`📋 நிலுவை விவரம்:\n${dl(cust)}\n`:`📋 வேலை: ${cust.jobName}\n`)+`💰 மொத்தத் தொகை: ₹${cust.total.toFixed(2)}\n✅ செலுத்தியது: ₹${cust.paid.toFixed(2)}\n⚠️ மீதி பாக்கி: ₹${cust.balance.toFixed(2)}${prev}\n\n🔹 பாக்கி தொகை இன்னும் செலுத்தப்படவில்லை. தயவுசெய்து விரைவில் செலுத்தி உதவுங்கள். இணைத்துள்ள QR-ஐ ஸ்கேன் செய்து செலுத்தலாம்.\n💳 UPI ID: ${UPI_ID}\n🙏 நன்றி! - தாஸ் பணி மேலாண்மை`;
+}
+async function sendWhatsApp(k){
+  const cust=customers.find(c=>c.id===k); if(!cust||!checkPhone(cust))return;
+  if(await shareBill(cust,buildWaMessage(cust),0)){const m=M[k]||{};m.b=(m.b||0)+1;m.last=Date.now();M[k]=m;save();render()}
+}
+async function sendReminder(k){
+  const cust=customers.find(c=>c.id===k); if(!cust||!checkPhone(cust))return;
+  if(cust.balance<=0){alert('பாக்கி இல்லை — நினைவூட்டல் தேவையில்லை.');return}
+  const no=(cust.remindCount||0)+1;
+  if(await shareBill(cust,buildReminderMessage(cust,no),no)){const m=M[k]||{};m.n=no;m.last=m.lr=Date.now();M[k]=m;save();render();toast('🔔 நினைவூட்டல் '+no+' பதிவானது — '+cust.name)}
+}
+function resetReminders(k){
+  const cust=customers.find(c=>c.id===k); if(!cust)return;
+  if(!confirm(cust.name+' — பில்/நினைவூட்டல் எண்ணிக்கையை பூஜ்யமாக்கவா?'))return;
+  delete M[k];save();render();
+}
+const waBill=k=>sendWhatsApp(dec(k)), imgBill=k=>copyBillImage(dec(k)), remBill=k=>sendReminder(dec(k)), prn=k=>printSingle(dec(k)), resetR=k=>resetReminders(dec(k));
 
-const REMIND_DAYS=3;
-const ld=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}};
-let E=ld('dhass_ledger_entries',[]), M=ld('dhass_ledger_meta',{}), open={};
-const $=id=>document.getElementById(id);
-const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-const inr=n=>'₹'+(Math.round((+n||0)*100)/100).toLocaleString('en-IN');
-const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
-const fd=s=>s?s.split('-').reverse().join('/'):'-';
-const days=s=>Math.max(0,Math.floor((Date.now()-new Date(s+'T00:00:00'))/864e5));
-const mkKey=(n,m)=>{const d=String(m||'').replace(/\D/g,'').slice(-10);return d.length===10?d:'n:'+String(n).trim().toLowerCase()};
-function save(){localStorage.setItem('dhass_ledger_entries',JSON.stringify(E));localStorage.setItem('dhass_ledger_meta',JSON.stringify(M));schedPush()}
-function toast(t){showToast(t)}
+function editCust(k){
+  k=dec(k);const c=groups().find(x=>x.k===k);if(!c)return;
+  const nm=prompt('பெயர்:',c.name);if(nm===null||!nm.trim())return;
+  const mb=prompt('வாட்ஸ்அப் எண்:',c.mobile||'');if(mb===null)return;
+  const nk=mkKey(nm,mb);
+  E.forEach(e=>{if(e.k===k){e.name=nm.trim();e.mobile=mb.trim();e.k=nk}});
+  if(nk!==k&&M[k]){M[nk]=M[k];delete M[k]}
+  save();render();toast('✅ திருத்தப்பட்டது');
+}
+function delCust(k){
+  k=dec(k);const c=groups().find(x=>x.k===k);if(!c)return;
+  if(!confirm('"'+c.name+'" — இவரின் எல்லாப் பதிவுகளையும் நிரந்தரமாக நீக்கவா?'))return;
+  E=E.filter(e=>e.k!==k);delete M[k];save();render();toast('🗑️ நீக்கப்பட்டது');
+}
+function editEntry(id){
+  const e=E.find(x=>x.id===id);if(!e)return;
+  const d=prompt('தேதி (YYYY-MM-DD):',e.date);if(d===null)return;
+  const ds=prompt('விவரம்:',e.desc||'');if(ds===null)return;
+  const a=parseFloat(prompt('தொகை (₹):',e.amt));
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(d)||!(a>0)){alert('சரியான தேதி / தொகையை உள்ளிடவும்!');return}
+  e.date=d;e.desc=ds.trim();e.amt=a;save();render();toast('✅ திருத்தப்பட்டது');
+}
 
-// வாடிக்கையாளர் வாரியாகக் குழுவாக்கி, பெற்ற தொகையை பழைய தேதியிலிருந்து கழிக்கும் (FIFO)
-function groups(){
-  const m={};
-  E.slice().sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:a.id-b.id).forEach(e=>{
-    const c=m[e.k]||(m[e.k]={k:e.k,name:e.name,mobile:e.mobile,rows:[],total:0,paid:0});
-    c.name=e.name||c.name;c.mobile=e.mobile||c.mobile;c.rows.push(Object.assign({},e));
-    if(e.t==='c')c.total+=e.amt;else c.paid+=e.amt;
+function printSingle(k){
+  const g=groups().find(x=>x.k===k),cust=customers.find(c=>c.id===k);if(!g||!cust)return;
+  const rows=g.rows.map(r=>'<tr><td>'+fd(r.date)+'</td><td>'+esc(r.desc||'')+'</td><td>'+(r.t==='p'?'− ':'')+'₹'+r.amt.toFixed(2)+'</td><td>'+(r.t==='p'?'பெறப்பட்டது':(r.rem<=0.001?'முடிந்தது':(r.got>0?'பகுதி — மீதம் ₹'+r.rem.toFixed(2):'நிலுவை')))+'</td></tr>').join('');
+  const win=window.open('','_blank');
+  win.document.write('<html><head><title>'+esc(cust.name)+' - பாக்கி விவரம்</title><style>body{font-family:Segoe UI,sans-serif;padding:2rem}.card{max-width:620px;margin:auto;border:1px solid #ccc;border-radius:20px;padding:25px}table{width:100%;border-collapse:collapse;margin:12px 0}th,td{border:1px solid #bbb;padding:6px;text-align:left;font-size:14px}.due{color:#b91c1c;font-size:1.3rem;font-weight:bold}</style></head><body><div class="card"><h3>📄 தாஸ் CSC - பாக்கி சீட்டு</h3><p><b>வாடிக்கையாளர்:</b> '+esc(cust.name)+' &nbsp; <b>வாட்ஸ்அப்:</b> '+(cust.whatsapp||'-')+'</p><table><thead><tr><th>தேதி</th><th>விவரம்</th><th>தொகை</th><th>நிலை</th></tr></thead><tbody>'+rows+'</tbody></table><p>மொத்தம்: ₹'+cust.total.toFixed(2)+' | செலுத்தியது: ₹'+cust.paid.toFixed(2)+'</p><p class="due">மீதி பாக்கி: ₹'+cust.balance.toFixed(2)+'</p><div style="text-align:center">'+printQrSvg(cust)+'<div>UPI: '+UPI_ID+'</div></div><p>தாஸ் பொது சேவை மையம்</p><p><small>அச்சிட்ட தேதி: '+new Date().toLocaleString()+'</small></p></div><scr'+'ipt>window.onload=()=>{window.print();setTimeout(()=>window.close(),600)}</scr'+'ipt></body></html>');
+  win.document.close();
+}
+function printFullList(){
+  const rows=LASTL.map((c,i)=>'<tr><td>'+(i+1)+'</td><td>'+esc(c.name)+'</td><td>'+esc(c.mobile||'')+'</td><td>'+(c.oldest?fd(c.oldest):'-')+'</td><td>₹'+c.total.toFixed(2)+'</td><td>₹'+c.paid.toFixed(2)+'</td><td class="due">₹'+Math.max(0,c.bal).toFixed(2)+'</td></tr>').join('');
+  const win=window.open('','_blank');
+  win.document.write('<html><head><title>தாஸ் CSC - முழு பாக்கி பட்டியல்</title><style>table{width:100%;border-collapse:collapse}th,td{border:1px solid #aaa;padding:8px;text-align:left}th{background:#eef2ff}.due{font-weight:bold;color:#b91c1c}body{padding:20px;font-family:sans-serif}</style></head><body><h2>📋 தாஸ் பொது சேவை மையம் - வாடிக்கையாளர் & பாக்கி அறிக்கை</h2><table><thead><tr><th>#</th><th>வாடிக்கையாளர்</th><th>வாட்ஸ்அப்</th><th>பழைய பாக்கி தேதி</th><th>மொத்தம்</th><th>செலுத்தியது</th><th>பாக்கி</th></tr></thead><tbody>'+rows+'</tbody></table><p>மொத்த பாக்கி: ₹'+LASTL.reduce((s,c)=>s+Math.max(0,c.bal),0).toFixed(2)+' | UPI: '+UPI_ID+'</p><scr'+'ipt>window.onload=()=>window.print()</scr'+'ipt></body></html>');
+  win.document.close();
+}
+
+// ---- Export / Import ----
+function dl_(name,type,text){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click()}
+function exportJSON(){dl_('customer_ledger_'+today()+'.json','application/json',JSON.stringify({v:2,entries:E,meta:M}))}
+function exportCSV(){
+  const q=s=>'"'+String(s==null?'':s).replace(/"/g,'""')+'"';
+  const rows=[['வாடிக்கையாளர்','வாட்ஸ்அப்','தேதி','விவரம்','வகை','தொகை']].concat(E.slice().sort((a,b)=>a.date<b.date?-1:1).map(e=>[e.name,e.mobile,e.date,e.desc,e.t==='c'?'பாக்கி':'பெற்றது',e.amt]));
+  dl_('customer_ledger_'+today()+'.csv','text/csv;charset=utf-8','\ufeff'+rows.map(r=>r.map(q).join(',')).join('\n'));
+}
+// பழைய பாக்கிக் கருவியின் பதிவுகளை (வேலை வாரி) தேதி வாரிப் பதிவாக மாற்றும்
+function convertOld(arr){
+  const have=new Set(E.map(e=>e.id));let n=0;
+  arr.forEach(r=>{
+    if(!r||!r.name)return;
+    const d=new Date(r.id||Date.now()),date=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    const k=mkKey(r.name,r.whatsapp),mob=r.whatsapp||'',id=(r.id||Date.now())*10;
+    if(have.has(id))return;
+    E.push({id,k,name:r.name,mobile:mob,date,t:'c',desc:r.jobName||'சேவை',amt:+r.total||0});
+    const pd=Math.min(+r.paid||0,+r.total||0);
+    if(pd>0)E.push({id:id+1,k,name:r.name,mobile:mob,date,t:'p',desc:'ஆரம்பத்தில்',amt:pd});
+    const m=M[k]||{};m.n=Math.max(m.n||0,r.remindCount||0);m.b=(m.b||0)+(r.billSent||0);m.last=Math.max(m.last||0,r.lastSentAt||0);m.lr=Math.max(m.lr||0,r.lastRemindAt||0);M[k]=m;n++;
   });
-  return Object.values(m).map(c=>{
-    let left=c.paid;
-    c.rows.forEach(r=>{if(r.t==='c'){const u=Math.min(left,r.amt);r.got=u;r.rem=r.amt-u;left-=u}});
-    c.bal=Math.round((c.total-c.paid)*100)/100;
-    const o=c.rows.find(r=>r.t==='c'&&r.rem>0.001);c.oldest=o?o.date:null;
-    const mt=M[c.k]||{};c.n=mt.n||0;c.last=mt.last||0;
-    c.needs=c.bal>0&&(!c.last||(Date.now()-c.last)/864e5>=REMIND_DAYS);
-    return c;
-  });
+  save();render();return n;
 }
-
-function render(){
-  const G=groups(), q=$('lgq').value.trim().toLowerCase(), f=$('lgf').value, t=today();
-  $('lgsBal').textContent=inr(G.reduce((s,c)=>s+Math.max(0,c.bal),0));
-  $('lgsDue').textContent=G.filter(c=>c.bal>0).length;
-  $('lgsRem').textContent=G.filter(c=>c.needs).length;
-  $('lgsTod').textContent=inr(E.filter(e=>e.t==='p'&&e.date===t).reduce((s,e)=>s+e.amt,0));
-  // தேர்வுப் பட்டியல்கள்
-  const cur=$('lgpCust').value;
-  $('lgpCust').innerHTML='<option value="">-- பாக்கி உள்ளவரைத் தேர்க --</option>'+G.filter(c=>c.bal>0).map(c=>'<option value="'+esc(encodeURIComponent(c.k))+'">'+esc(c.name)+' ('+esc(c.mobile||'')+') - '+inr(c.bal)+'</option>').join('');
-  $('lgpCust').value=cur;showBal();
-  $('lgcustList').innerHTML=G.map(c=>'<option value="'+esc(c.name)+'">'+esc(c.mobile||'')+'</option>').join('');
-  let L=G.filter(c=>(f==='all')||(f==='due'&&c.bal>0)||(f==='rem'&&c.needs)||(f==='clear'&&c.bal<=0));
-  if(q)L=L.filter(c=>(c.name+' '+(c.mobile||'')).toLowerCase().includes(q));
-  L.sort((a,b)=>b.bal-a.bal);
-  if(!L.length){$('lgbody').innerHTML='<tr><td colspan="8" style="text-align:center">பதிவுகள் எதுவுமில்லை</td></tr>';return}
-  $('lgbody').innerHTML=L.map((c,i)=>{
-    const k=esc(encodeURIComponent(c.k));
-    let h='<tr><td>'+(i+1)+'</td><td><b>'+esc(c.name)+'</b><br><small>'+esc(c.mobile||'')+'</small></td>'+
-      '<td>'+(c.oldest?fd(c.oldest)+'<br><span class="badge no">'+days(c.oldest)+' நாள்</span>':'—')+'</td>'+
-      '<td>'+inr(c.total)+'</td><td>'+inr(c.paid)+'</td><td class="bal">'+inr(c.bal)+'</td>'+
-      '<td>'+(c.n?c.n+' முறை<br><small>'+fd(new Date(c.last).toISOString().slice(0,10))+'</small>':'இல்லை')+'</td>'+
-      '<td><button class="tb t-d" onclick="LG.tog(\''+k+'\')">'+(open[c.k]?'▲':'▼')+' விவரம்</button>'+
-      (c.bal>0?'<button class="tb t-p" onclick="LG.payFor(\''+k+'\')">💵 பெற்றது</button><button class="tb t-w" onclick="LG.remind(\''+k+'\')">📲 நினைவூட்டு</button>':'')+'</td></tr>';
-    if(open[c.k]){
-      h+='<tr class="det"><td></td><td colspan="7"><table><thead><tr><th>தேதி</th><th>விவரம்</th><th>தொகை</th><th>நிலை</th><th></th></tr></thead><tbody>'+
-      c.rows.map(r=>{
-        const st=r.t==='p'?'<span class="badge ok">💵 பெறப்பட்டது</span>':(r.rem<=0.001?'<span class="badge ok">✔ முடிந்தது</span>':(r.got>0?'<span class="badge part">பகுதி — மீதம் '+inr(r.rem)+'</span>':'<span class="badge no">நிலுவை</span>'));
-        return '<tr><td>'+fd(r.date)+'</td><td>'+esc(r.desc||'')+'</td><td>'+(r.t==='p'?'− ':'')+inr(r.amt)+'</td><td>'+st+'</td><td><button class="tb t-x" onclick="LG.del('+r.id+')">🗑️</button></td></tr>';
-      }).join('')+'</tbody></table></td></tr>';
-    }
-    return h;
-  }).join('');
-}
-
-function setF(v){$('lgf').value=v;$('lgq').value='';render()}
-function tog(k){k=decodeURIComponent(k);open[k]=!open[k];render()}
-
-// ---- பாக்கி சேர் ----
-function addRow(s,a){
-  const d=document.createElement('div');d.className='item';
-  d.innerHTML='<input class="is" placeholder="சேவை / வேலை (எ.கா: பான் திருத்தம்)" value="'+esc(s||'')+'"><input class="ia" type="number" min="0" step="any" placeholder="₹ தொகை" value="'+esc(a||'')+'"><button class="x" title="நீக்கு">✕</button>';
-  d.querySelector('.x').onclick=()=>{if($('lgitems').children.length>1)d.remove();else{d.querySelector('.is').value='';d.querySelector('.ia').value=''}};
-  $('lgitems').appendChild(d);
-}
-function fillMob(){
-  const n=$('lgaName').value.trim().toLowerCase(), c=groups().find(c=>c.name.toLowerCase()===n);
-  if(c&&c.mobile&&!$('lgaMob').value)$('lgaMob').value=c.mobile;
-}
-function addCharge(){
-  const name=$('lgaName').value.trim(), mob=$('lgaMob').value.trim(), date=$('lgaDate').value||today();
-  const items=[...document.querySelectorAll('#lgitems .item')].map(r=>({s:r.querySelector('.is').value.trim(),a:parseFloat(r.querySelector('.ia').value)||0})).filter(x=>x.a>0);
-  if(!name||!items.length){alert('பெயர் மற்றும் குறைந்தது ஒரு வேலையின் தொகையை உள்ளிடவும்!');return}
-  const k=mkKey(name,mob), now=Date.now();
-  items.forEach((x,i)=>E.push({id:now+i,k,name,mobile:mob,date,t:'c',desc:x.s||'சேவைக் கட்டணம்',amt:x.a}));
-  save();$('lgaName').value='';$('lgaMob').value='';$('lgitems').innerHTML='';addRow();$('lgaDate').value=today();
-  render();toast('✔ பாக்கியில் சேர்க்கப்பட்டது');
-}
-
-// ---- தொகை பெற்றது ----
-function curG(){const k=$('lgpCust').value;return k?groups().find(c=>c.k===decodeURIComponent(k)):null}
-function showBal(){const c=curG();$('lgpBal').textContent=c?'மீதம் பாக்கி: '+inr(c.bal):''}
-function fullAmt(){const c=curG();if(c)$('lgpAmt').value=c.bal}
-function payFor(k){$('lgpCust').value=k;showBal();$('lgpAmt').focus();$('lgpAmt').scrollIntoView({behavior:'smooth',block:'center'})}
-function receive(){
-  const c=curG(), amt=parseFloat($('lgpAmt').value)||0;
-  if(!c||amt<=0){alert('வாடிக்கையாளரைத் தேர்ந்து, பெற்ற தொகையை உள்ளிடவும்!');return}
-  if(amt>c.bal+0.001){alert('பெற்ற தொகை மீதம் உள்ள பாக்கியை ('+inr(c.bal)+') விட அதிகமாக உள்ளது!');return}
-  const note=$('lgpNote').value.trim();
-  E.push({id:Date.now(),k:c.k,name:c.name,mobile:c.mobile,date:$('lgpDate').value||today(),t:'p',desc:$('lgpMode').value+(note?' - '+note:''),amt});
-  save();$('lgpAmt').value='';$('lgpNote').value='';$('lgpCust').value='';
-  render();toast('✔ '+inr(amt)+' கழிக்கப்பட்டது');
-}
-function del(id){
-  if(!confirm('இந்தப் பதிவை நிரந்தரமாக நீக்கவா?'))return;
-  E=E.filter(e=>e.id!==id);save();render();toast('🗑️ நீக்கப்பட்டது');
-}
-
-// ---- WhatsApp நினைவூட்டல் ----
-function remind(k){
-  k=decodeURIComponent(k);const c=groups().find(x=>x.k===k);if(!c)return;
-  const lines=c.rows.filter(r=>r.t==='c'&&r.rem>0.001).map(r=>fd(r.date)+' - '+r.desc+' - '+inr(r.rem)+(r.got>0?' (மீதம்)':''));
-  const txt='வணக்கம் '+c.name+',\nதாஸ் பொது சேவை மையம், தூத்துக்குடி.\nஉங்களுடைய நிலுவைக் கட்டண விவரம்:\n'+lines.join('\n')+'\n\nமொத்த நிலுவை: '+inr(c.bal)+'\nUPI: '+UPI_ID+'\nதயவுசெய்து கட்டணத்தைச் செலுத்தவும். நன்றி!';
-  let d=String(c.mobile||'').replace(/\D/g,'');if(d.length===11&&d[0]==='0')d=d.slice(1);if(d.length===10)d='91'+d;
-  M[k]={n:((M[k]||{}).n||0)+1,last:Date.now()};save();render();
-  window.open('https://wa.me/'+(d.length>=11?d:'')+'?text='+encodeURIComponent(txt),'_blank');
-}
-
-// ---- காப்புப் பிரதி ----
-function exportJ(){
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({entries:E,meta:M})],{type:'application/json'}));
-  a.download='customer_ledger_'+today()+'.json';a.click();
-}
-function importJ(inp){
-  const f=inp.files[0];if(!f)return;const r=new FileReader();
-  r.onload=()=>{try{const j=JSON.parse(r.result);if(!Array.isArray(j.entries))throw 0;
+function importJSON(file){
+  const fr=new FileReader();
+  fr.onload=()=>{try{
+    const j=JSON.parse(fr.result);
+    if(Array.isArray(j)){const n=convertOld(j);toast('✅ பழைய பதிவுகள் '+n+' இறக்குமதி ஆனது');return}
+    if(!Array.isArray(j.entries))throw 0;
     if(!confirm('தற்போதைய பதிவுகள் இந்தக் கோப்பால் மாற்றப்படும். தொடரவா?'))return;
-    E=j.entries;M=j.meta||{};save();render();toast('✔ இறக்குமதி முடிந்தது')}catch(e){alert('தவறான கோப்பு!')}inp.value=''};
-  r.readAsText(f);
+    E=j.entries;M=j.meta||{};save();render();toast('✅ இறக்குமதி முடிந்தது');
+  }catch(e){alert('தவறான கோப்பு!')}};
+  fr.readAsText(file);
 }
 
-
-
-// ---- Cloud Sync (பாக்கி கருவியின் அதே gasUrl; சாவி வாரியாக; பெரிய தரவு துண்டாக) ----
-const CK='dhass_ledger_c', NK='dhass_ledger_n', MK='__syncMeta_dhass_ledger', CS=30000;
-let pt=null;
+// ---- Cloud Sync (பாக்கிக் கருவியின் அதே GAS; துண்டுகளாக) ----
+const GAS_URL_KEY='dhassBalanceGasSyncUrl',DEFAULT_GAS_URL='https://script.google.com/macros/s/AKfycbyjDr2zZax0bBBl53NCxu8gfdE66Z-U--DFGsg6tAdvjhRWAP9fWRzuU2e-LruLf4lEDA/exec';
+let gasUrl=localStorage.getItem(GAS_URL_KEY)||DEFAULT_GAS_URL,pt=null;
+const CK='dhass_ledger_c',NK='dhass_ledger_n',MK='__syncMeta_dhass_ledger',CS=30000;
+function setSyncStatus(t){const e=document.getElementById('syncStatus');if(e)e.textContent=t}
 function post(key,value,t){return fetch(gasUrl,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({key:key,value:value,updatedAt:t})})}
 function schedPush(){if(!gasUrl)return;clearTimeout(pt);pt=setTimeout(push,900)}
 async function push(){
   if(!gasUrl)return;
-  const s=JSON.stringify({entries:E,meta:M}), parts=[], t=Date.now();
+  const s=JSON.stringify({entries:E,meta:M}),parts=[],t=Date.now();
   for(let i=0;i<s.length;i+=CS)parts.push(s.slice(i,i+CS));
   try{
     setSyncStatus('🔄 சின்க் செய்யப்படுகிறது...');
@@ -1476,20 +733,40 @@ async function push(){
 async function pull(){
   if(!gasUrl)return;
   try{
-    const r=await (await fetch(gasUrl+'?action=getAll')).json(), n=r[NK];
-    if(!n||!n.updatedAt){if(E.length)push();return}
-    if(n.updatedAt<=parseInt(localStorage.getItem(MK)||'0',10))return;
+    const r=await (await fetch(gasUrl+'?action=getAll')).json(),n=r[NK];
+    if(!n||!n.updatedAt){
+      if(!E.length&&r[OLD_KEY]&&r[OLD_KEY].value){convertOld(JSON.parse(r[OLD_KEY].value));push();toast('✅ பழைய பாக்கிப் பதிவுகள் மாற்றப்பட்டன')}
+      else if(E.length)push();
+      setSyncStatus('✅ சின்க் ஆனது ('+new Date().toLocaleTimeString('ta-IN')+')');return;
+    }
+    if(n.updatedAt<=parseInt(localStorage.getItem(MK)||'0',10)){setSyncStatus('✅ சின்க் ஆனது ('+new Date().toLocaleTimeString('ta-IN')+')');return}
     let s='';
     for(let i=0;i<parseInt(n.value,10);i++){const c=r[CK+i];if(!c||c.updatedAt!==n.updatedAt)return;s+=String(c.value).slice(1)}
     const j=JSON.parse(s);E=j.entries||[];M=j.meta||{};
     localStorage.setItem('dhass_ledger_entries',JSON.stringify(E));localStorage.setItem('dhass_ledger_meta',JSON.stringify(M));
     localStorage.setItem(MK,String(n.updatedAt));render();
-  }catch(e){console.error('Ledger pull',e)}
+    setSyncStatus('✅ சின்க் ஆனது ('+new Date().toLocaleTimeString('ta-IN')+')');
+  }catch(e){setSyncStatus('⚠️ சின்க் பிழை - இணையம் சரிபார்க்கவும்');console.error('pull',e)}
 }
-$('lgaDate').value=today();$('lgpDate').value=today();addRow();render();
+function promptGasUrl(){
+  const v=prompt('Google Apps Script Web App URL-ஐ ஒட்டவும்:',gasUrl||'');if(v===null)return;
+  gasUrl=v.trim();localStorage.setItem(GAS_URL_KEY,gasUrl);
+  if(gasUrl){setSyncStatus('⏳ முதல் சின்க்...');pull().then(()=>push())}else setSyncStatus('☁️ Sync அமைக்கப்படவில்லை');
+}
+function manualSync(){if(!gasUrl){promptGasUrl();return}pull()}
+
+// ---- தொடக்கம் ----
+if(!E.length){try{const raw=localStorage.getItem(OLD_KEY);if(raw){const n=convertOld(JSON.parse(raw));if(n)setTimeout(()=>toast('✅ பழைய பதிவுகள் '+n+' மாற்றப்பட்டன'),500)}}catch(e){}}
+document.getElementById('exportDataBtn').addEventListener('click',exportJSON);
+document.getElementById('exportCSVBtn').addEventListener('click',exportCSV);
+document.getElementById('importFileInput').addEventListener('change',e=>{if(e.target.files.length)importJSON(e.target.files[0]);e.target.value=''});
+document.getElementById('customQrInput').addEventListener('change',e=>{setCustomQr(e.target.files[0]);e.target.value=''});
+loadCustomQr();
+(function(){const q=document.getElementById('qrAmountToggle');q.checked=localStorage.getItem('qr_amount')!=='0';q.addEventListener('change',()=>{localStorage.setItem('qr_amount',q.checked?'1':'0');toast(q.checked?'💰 QR-இல் தொகை: ON':'💰 QR-இல் தொகை: OFF')})})();
+(function(){const t=document.getElementById('waDirectToggle');t.checked=localStorage.getItem('wa_direct')!=='0';t.addEventListener('change',()=>{localStorage.setItem('wa_direct',t.checked?'1':'0');toast(t.checked?'📲 நேரடி WhatsApp: ON':'📤 படத்துடன் பகிர்வு முறை: ON')})})();
+$('aDate').value=today();$('pDate').value=today();addRow();render();
+if(gasUrl)setSyncStatus('☁️ Sync தயார்');
 pull();setInterval(pull,20000);
-window.LG={setF,fillMob,addRow,addCharge,showBal,fullAmt,receive,render,tog,payFor,remind,del,exportJ,importJ};
-})();
 </script>
 </body>
 </html>
